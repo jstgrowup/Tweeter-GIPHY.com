@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -151,9 +151,10 @@ function Signup() {
             color={"white"}
             size={"lg"}
             width={"100%"}
+            _hover={{ bg: "#24AEB1" }}
             bg={"#24AEB1"}
           >
-           Signup
+            Signup
           </Button>
         </Flex>
       </Box>
