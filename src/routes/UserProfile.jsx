@@ -9,6 +9,7 @@ import {
   useDisclosure,
   Flex,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 import { userLogin } from "../store/UserActions";
 function UserProfile() {
   const { data } = useSelector((store) => store.user);
-
+  const toast = useToast();
   const navigate = useNavigate();
   const [formData, setformData] = useState({
     fullname: "",
@@ -60,15 +61,21 @@ function UserProfile() {
       );
       const { data } = resp;
       dispatch(userLogin(data));
+      onClose();
       toast({
         title: "Updated successfully",
         status: "success",
         duration: 2000,
         isClosable: true,
       });
-      onClose();
     } catch (e) {
-      alert("Login failure");
+      onClose();
+      toast({
+        title: "Something is wrong",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   const handleSubmit = (id) => {

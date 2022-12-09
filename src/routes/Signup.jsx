@@ -153,7 +153,7 @@ function Signup() {
             width={"100%"}
             bg={"#24AEB1"}
           >
-            VERIFY
+           Signup
           </Button>
         </Flex>
       </Box>

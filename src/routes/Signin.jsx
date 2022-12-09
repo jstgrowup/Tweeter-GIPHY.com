@@ -127,7 +127,7 @@ function Signin() {
               width={"100%"}
               bg={"#24AEB1"}
             >
-              VERIFY
+              Sign In
             </Button>
           </Flex>
         </Box>
