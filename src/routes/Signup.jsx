@@ -6,6 +6,7 @@ import {
   Flex,
   Heading,
   Input,
+  Spinner,
   Text,
   useColorModeValue,
   useToast,
@@ -14,6 +15,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 function Signup() {
   const toast = useToast();
+  const [loading, setloading] = useState(false);
   const navigate = useNavigate();
   const [formData, setformData] = useState({
     username: "",
@@ -57,7 +59,11 @@ function Signup() {
           "https://mock-v41w.onrender.com/users",
           formData
         );
-
+        if (!res) {
+          setloading(true);
+        } else {
+          setloading(false);
+        }
         toast({
           title: "Signup successfull",
 
@@ -74,7 +80,17 @@ function Signup() {
   const handleSubmit = () => {
     postUser();
   };
-
+  if (loading) {
+    return (
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    );
+  }
   return (
     <Center p={"10"}>
       <Box
@@ -95,7 +111,7 @@ function Signup() {
             User Name{" "}
           </Text>
           <Input
-          borderColor={"black"}
+            borderColor={"black"}
             type={"text"}
             name={"username"}
             onChange={handleChange}
@@ -105,7 +121,7 @@ function Signup() {
             Full Name{" "}
           </Text>
           <Input
-          borderColor={"black"}
+            borderColor={"black"}
             type={"text"}
             name={"fullname"}
             onChange={handleChange}
@@ -115,7 +131,7 @@ function Signup() {
             EMAIL ID{" "}
           </Text>
           <Input
-          borderColor={"black"}
+            borderColor={"black"}
             type={"text"}
             name={"email"}
             onChange={handleChange}
@@ -123,7 +139,7 @@ function Signup() {
           ></Input>
           <Text fontSize={"sm"}>Password</Text>
           <Input
-          borderColor={"black"}
+            borderColor={"black"}
             type={"text"}
             name={"password"}
             onChange={handleChange}

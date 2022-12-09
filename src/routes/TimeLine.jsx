@@ -49,7 +49,7 @@ function TimeLine() {
     let huru = e.target.value;
     try {
       let res = await axios.get(
-        `https://api.giphy.com/v1/gifs/search?api_key=HbK8mqA6OKEAQ0aIUVz2FEP3H985n1lM&q=${huru}&limit=25&offset=0&rating=g&lang=en`
+        `https://api.giphy.com/v1/gifs/search?api_key=${import.meta.env.VITE_KEY}&q=${huru}&limit=25&offset=0&rating=g&lang=en`
       );
       let {
         data: { data },
