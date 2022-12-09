@@ -11,6 +11,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
+import "./Timeline.css";
 import React, { useEffect, useState } from "react";
 import {
   Modal,
@@ -24,7 +25,7 @@ import {
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
-
+import { BiDislike, BiLike } from "react-icons/bi";
 const getData = async () => {
   try {
     const res = await axios.get("https://mock-v41w.onrender.com/posts");
@@ -44,12 +45,15 @@ function TimeLine() {
   const [bool, setbool] = useState(false);
   const [text, settext] = useState("");
   const [url, seturl] = useState("");
-
+  const [likes, setlikes] = useState(0);
+  const [dislikes, setdislikes] = useState(0);
   const handleChange = async (e) => {
     let huru = e.target.value;
     try {
       let res = await axios.get(
-        `https://api.giphy.com/v1/gifs/search?api_key=${import.meta.env.VITE_KEY}&q=${huru}&limit=25&offset=0&rating=g&lang=en`
+        `https://api.giphy.com/v1/gifs/search?api_key=${
+          import.meta.env.VITE_KEY
+        }&q=${huru}&limit=25&offset=0&rating=g&lang=en`
       );
       let {
         data: { data },
@@ -69,15 +73,16 @@ function TimeLine() {
     getData()
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
-  }, [bool]);
+  }, [bool, likes, dislikes]);
   const handleSubmit = async () => {
     try {
       const respo = {
         username: data.username,
         title: text,
         url: url,
+        likes: likes,
+        dislikes: dislikes,
       };
-     
 
       const res = await axios.post(
         "https://mock-v41w.onrender.com/posts",
@@ -85,7 +90,7 @@ function TimeLine() {
       );
 
       setbool(!bool);
-      settext(null);
+      settext("");
       seturl(null);
       toast({
         title: "Post successfull",
@@ -96,6 +101,27 @@ function TimeLine() {
     } catch (error) {
       alert(error.message);
     }
+  };
+  const handleLikesAndDislikes = async (id, type) => {
+    try {
+      if (type === "like") {
+        setlikes((prev) => prev + 1);
+        let resp = await axios.patch(
+          `https://mock-v41w.onrender.com/posts/${id}`,
+          {
+            likes: likes,
+          }
+        );
+      } else {
+        setdislikes((prev) => prev + 1);
+        let resp = await axios.patch(
+          `https://mock-v41w.onrender.com/posts/${id}`,
+          {
+            dislikes: dislikes,
+          }
+        );
+      }
+    } catch (error) {}
   };
   const handleDelete = async (id) => {
     try {
@@ -183,8 +209,6 @@ function TimeLine() {
         <Flex
           mt={"4"}
           w={"50%"}
-        
-         
           gap={"4"}
           // bg={useColorModeValue("white", "white")}
           color={useColorModeValue("black", "black")}
@@ -194,8 +218,8 @@ function TimeLine() {
           {wholeData?.map((el) => {
             return (
               <Flex
-              boxShadow={"2xl"}
-              borderRadius={"2xl"}
+                boxShadow={"2xl"}
+                borderRadius={"2xl"}
                 bg={"white"}
                 w={"100%"}
                 direction={"column"}
@@ -222,7 +246,20 @@ function TimeLine() {
                   )}
                 </Flex>
                 <Text>{el.title}</Text>
-                <Image borderBottomRadius={"2xl"} w={"100%"} h={"300px"} src={el.url}></Image>
+                <Image w={"100%"} h={"300px"} src={el.url}></Image>
+                <Flex ml={"2"} gap={"3"}>
+                  <BiLike
+                    className="huru"
+                    onClick={() => handleLikesAndDislikes(el.id, "like")}
+                  />
+                  <Text fontWeight={"bold"}>{el.likes}</Text>
+                  <BiDislike
+                    className="huru"
+                    onClick={() => handleLikesAndDislikes(el.id, "dislikes")}
+                  />
+
+                  <Text fontWeight={"bold"}>{el.dislikes}</Text>
+                </Flex>
               </Flex>
             );
           })}
