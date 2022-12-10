@@ -23,10 +23,6 @@ This is Social media website where users can create an account , signin and than
 
 ![Edit Profile Modal](https://user-images.githubusercontent.com/40628582/206829693-a7f1b442-932f-4b78-8046-9db59ebaea47.png)
 
-- ## Edit Profile Modal
-
-![Edit Profile Modal](https://user-images.githubusercontent.com/40628582/206829693-a7f1b442-932f-4b78-8046-9db59ebaea47.png)
-
 - ## TimeLine Page
 
 ![TimeLine Page](https://user-images.githubusercontent.com/40628582/206829903-f1cee7df-b777-4c95-b50e-83e8c1f033fd.png)
