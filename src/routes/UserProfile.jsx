@@ -187,9 +187,9 @@ function UserProfile() {
                 <ModalCloseButton />
                 <ModalBody>
                   <Flex direction={"column"} align="start" p={"3"} gap={"3"}>
-                    <Heading>Sign In</Heading>
+          
                     <Text fontSize={"sm"} align={"start"}>
-                      full Name{" "}
+                      Full Name{" "}
                     </Text>
                     <Input
                       type={"text"}
