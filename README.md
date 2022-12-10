@@ -27,6 +27,12 @@ This is Social media website where users can create an account , signin and than
 
 ![TimeLine Page](https://user-images.githubusercontent.com/40628582/206829903-f1cee7df-b777-4c95-b50e-83e8c1f033fd.png)
 
+- ## Dark Modes
+
+![TimeLine Page](https://user-images.githubusercontent.com/40628582/206831470-f0797a9f-94e0-4702-be1e-0f8851edf3a4.png)
+![TimeLine Page](https://user-images.githubusercontent.com/40628582/206831471-082c7ef5-4586-430e-b257-c9faf7871e16.png)
+![TimeLine Page](https://user-images.githubusercontent.com/40628582/206831478-d1099225-1c74-4b16-976c-db8fa4dc2fb6.png)
+
 # Features
 
 - ## Sign up and Sign in Page
@@ -47,6 +53,7 @@ This is Social media website where users can create an account , signin and than
 
 - JSON server
 
-# Video Explaination 
+# Video Explaination
+
 - https://youtu.be/QeXO7GUo6LA
   ​
