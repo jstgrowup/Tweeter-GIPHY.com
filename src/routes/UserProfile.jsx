@@ -24,9 +24,11 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../store/UserActions";
+import { getTheUser, userLogin } from "../store/UserRedux/UserActions";
+
 function UserProfile() {
   const { data } = useSelector((store) => store.user);
+
   const toast = useToast();
   const navigate = useNavigate();
   const [formData, setformData] = useState({
@@ -45,22 +47,25 @@ function UserProfile() {
     onOpen();
   };
   const postUser = async (id) => {
-    const { email: emu, fullname: huru, password: pasu } = formData;
-    if (!emu || !huru || !pasu) {
+    const { fullname, email, password } = formData;
+    if (!fullname || !email || !password) {
       alert("please enter all the required fields");
     }
-    const { fullname, email, password } = formData;
+
     try {
       let resp = await axios.patch(
-        `https://mock-v41w.onrender.com/users/${id}`,
+        `http://localhost:8080/user/updateUser/${id}`,
         {
           fullname: fullname,
           email: email,
           password: password,
         }
       );
-      const { data } = resp;
-      dispatch(userLogin(data));
+
+      const {
+        data: { _id },
+      } = resp;
+
       onClose();
       toast({
         title: "Updated successfully",
@@ -68,6 +73,7 @@ function UserProfile() {
         duration: 2000,
         isClosable: true,
       });
+      dispatch(getTheUser(_id));
     } catch (e) {
       onClose();
       toast({
@@ -187,7 +193,6 @@ function UserProfile() {
                 <ModalCloseButton />
                 <ModalBody>
                   <Flex direction={"column"} align="start" p={"3"} gap={"3"}>
-          
                     <Text fontSize={"sm"} align={"start"}>
                       Full Name{" "}
                     </Text>
@@ -216,7 +221,7 @@ function UserProfile() {
                     ></Input>
 
                     <Button
-                      onClick={() => handleSubmit(data.id)}
+                      onClick={() => handleSubmit(data._id)}
                       color={"white"}
                       size={"lg"}
                       width={"100%"}

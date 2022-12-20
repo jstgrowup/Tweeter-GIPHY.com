@@ -24,6 +24,7 @@ function Signup() {
     password: "",
     img: "https://i.pravatar.cc/300",
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
@@ -31,6 +32,7 @@ function Signup() {
 
   const postUser = async () => {
     const { email, fullname, password } = formData;
+
     if (!email || !fullname || !password) {
       toast({
         title: "All fields are required",
@@ -39,42 +41,29 @@ function Signup() {
         isClosable: true,
       });
     }
-    const { username } = formData;
     try {
-      let resp = await axios.get("https://mock-v41w.onrender.com/users");
-      const { data } = resp;
+      const res = await axios.post(
+        "http://localhost:8080/user/postUser",
+        formData
+      );
+      console.log("res:", res);
 
-      let huru = data.find((el) => el.username === username);
+      toast({
+        title: "Signup successfull",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
 
-      if (huru) {
-        toast({
-          title: "User Already Registered",
-          description: "User Already Registered please proceed to signin",
-          status: "warning",
-          duration: 2000,
-          isClosable: true,
-        });
-      } else {
-        const res = await axios.post(
-          "https://mock-v41w.onrender.com/users",
-          formData
-        );
-        if (!res) {
-          setloading(true);
-        } else {
-          setloading(false);
-        }
-        toast({
-          title: "Signup successfull",
-
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-        });
-        navigate("/signin");
-      }
+      navigate("/signin");
     } catch (e) {
-      alert(`rightcompo condition failed: ${e.message}`);
+      toast({
+        title: `${e.message}`,
+        description: "User Already Registered please proceed to signin",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   const handleSubmit = () => {

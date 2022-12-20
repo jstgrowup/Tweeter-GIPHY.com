@@ -105,7 +105,6 @@ function TimeLine() {
   const handleLikesAndDislikes = async (id, type) => {
     try {
       if (type === "like") {
-        
         setlikes((prev) => prev + 1);
         let resp = await axios.patch(
           `https://mock-v41w.onrender.com/posts/${id}`,

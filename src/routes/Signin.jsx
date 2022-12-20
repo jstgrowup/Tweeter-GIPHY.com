@@ -7,14 +7,13 @@ import {
   Heading,
   Input,
   Text,
-  useColorMode,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../store/UserActions";
+import { userLogin } from "../store/UserRedux/UserActions";
 function Signin() {
   const toast = useToast();
   const dispatch = useDispatch();
@@ -24,14 +23,15 @@ function Signin() {
     email: "",
     password: "",
   });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
 
   const postUser = async () => {
-    const { email: emu, username: huru, password: pasu } = formData;
-    if (!emu || !huru || !pasu) {
+    const { email, username, password } = formData;
+    if (!email || !username || !password) {
       toast({
         title: "All fields are required",
         status: "warning",
@@ -39,31 +39,22 @@ function Signin() {
         isClosable: true,
       });
     }
-    const { username, email, password } = formData;
     try {
-      let resp = await axios.get("https://mock-v41w.onrender.com/users");
-      const { data } = resp;
-
-      let huru = data.find(
-        (el) =>
-          el.username === username &&
-          el.password === password &&
-          el.email === email
-      );
-      if (huru) {
-        toast({
-          title: "Signin successfull",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-        });
-        dispatch(userLogin(huru));
-        navigate("/profile");
-      } else {
-        alert("Login failure");
-      }
+      dispatch(userLogin(formData));
+      toast({
+        title: "Login success",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      navigate("/profile");
     } catch (e) {
-      alert("Login failure");
+      toast({
+        title: `${e.message}`,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   const handleSubmit = () => {
@@ -122,7 +113,7 @@ function Signin() {
 
             <Button
               onClick={handleSubmit}
-              _hover={{bg:"#24AEB1"}}
+              _hover={{ bg: "#24AEB1" }}
               color={"white"}
               size={"lg"}
               width={"100%"}

@@ -6,10 +6,6 @@ const userState = {
   error: false,
 };
 export const userReducer = (state = userState, { type, payload }) => {
-
-
-
-
   switch (type) {
     case UserLoginsuccess: {
       return {
