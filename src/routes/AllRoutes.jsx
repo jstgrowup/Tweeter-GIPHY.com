@@ -72,17 +72,17 @@ function AllRoutes() {
         <Route
           path="/profile"
           element={
-            <PrivateRoute>
               <UserProfile />
-            </PrivateRoute>
+            // <PrivateRoute>
+            // </PrivateRoute>
           }
         />
         <Route
           path="/timeline"
           element={
-            <PrivateRoute>
               <TimeLine />
-            </PrivateRoute>
+            // <PrivateRoute>
+            // </PrivateRoute>
           }
         />
       </Routes>

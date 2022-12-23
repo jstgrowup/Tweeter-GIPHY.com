@@ -38,7 +38,6 @@ const getData = async () => {
 function TimeLine() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data } = useSelector((store) => store.user);
-
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
   const [wholeData, setwholeData] = useState([]);
@@ -47,6 +46,7 @@ function TimeLine() {
   const [url, seturl] = useState("");
   const [likes, setlikes] = useState(0);
   const [dislikes, setdislikes] = useState(0);
+
   const handleChange = async (e) => {
     let huru = e.target.value;
     try {
@@ -74,34 +74,7 @@ function TimeLine() {
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
   }, [bool, likes, dislikes]);
-  const handleSubmit = async () => {
-    try {
-      const respo = {
-        username: data.username,
-        title: text,
-        url: url,
-        likes: likes,
-        dislikes: dislikes,
-      };
 
-      const res = await axios.post(
-        "https://mock-v41w.onrender.com/posts",
-        respo
-      );
-
-      setbool(!bool);
-      settext("");
-      seturl(null);
-      toast({
-        title: "Post successfull",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
-    } catch (error) {
-      alert(error.message);
-    }
-  };
   const handleLikesAndDislikes = async (id, type) => {
     try {
       if (type === "like") {
@@ -140,6 +113,33 @@ function TimeLine() {
       alert(error.message);
     }
   };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (er) => {
+        reject(er);
+      };
+    });
+  };
+  const handleFileInputChange = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+
+    try {
+      const res = await axios.post("http://localhost:8080/posts/uploadImage", {
+        image: base64,
+      });
+      console.log(res);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div>
       <Center>
@@ -157,17 +157,35 @@ function TimeLine() {
             borderColor={"black"}
             onChange={(e) => settext(e.target.value)}
           />
-          {url && <Image w={"100%"} h={"200px"} src={url} />}
+          <Input
+            type="file"
+            name="image"
+            onChange={handleFileInputChange}
+            
+          />
+
+          <Button type="submit" colorScheme={"blue"} color={"white"}>
+            POST
+          </Button>
+
+          {/* {previewSource && (
+            <Image
+              w={"100%"}
+              h={"350px"}
+              src={previewSource}
+              alt={"not chosen"}
+            />
+          )} */}
           <Flex justify={"space-between"}>
-            <Button
-              onClick={onOpen}
-              _hover={useColorModeValue("#FFDD00", "#FFDD00")}
-              bg={useColorModeValue("#FFDD00", "#FFDD00")}
-              color={useColorModeValue("black", "black")}
-            >
-              GIF
-            </Button>
-            <Modal isOpen={isOpen} onClose={onClose}>
+            {/* <Input
+              placeholder="Choose your file"
+              type={"file"}
+              name={"image"}
+              onChange={handleFileInput}
+              value={file}
+            /> */}
+
+            {/* <Modal isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>Search Your GIPHY</ModalHeader>
@@ -198,10 +216,7 @@ function TimeLine() {
                   </Button>
                 </ModalFooter>
               </ModalContent>
-            </Modal>
-            <Button onClick={handleSubmit} colorScheme={"blue"} color={"white"}>
-              POST
-            </Button>
+            </Modal> */}
           </Flex>
         </Box>
       </Center>
