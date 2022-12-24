@@ -285,7 +285,7 @@ function UserProfile() {
       <Center>
         <Heading>Your Posts</Heading>
       </Center>
-      <Center>
+      <Flex  gap={"3"} align={"center"}>
         {wholeData?.map((el) => {
           return (
             <Flex
@@ -295,6 +295,7 @@ function UserProfile() {
               w={"50%"}
               direction={"column"}
               align={"flex-start"}
+             
               color={useColorModeValue("black", "black")}
               key={el._id}
             >
@@ -341,7 +342,7 @@ function UserProfile() {
             </Flex>
           );
         })}
-      </Center>
+      </Flex>
     </>
   );
 }

@@ -17,7 +17,7 @@ import { useDispatch } from "react-redux";
 import { getTheUser } from "../store/UserRedux/UserActions";
 function AllRoutes() {
   const { colorMode, toggleColorMode } = useColorMode();
- 
+
   return (
     <div style={{ height: "700px" }}>
       <Flex
@@ -75,17 +75,17 @@ function AllRoutes() {
         <Route
           path="/profile"
           element={
-            <UserProfile />
-            // <PrivateRoute>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <UserProfile />
+            </PrivateRoute>
           }
         />
         <Route
           path="/timeline"
           element={
-            <TimeLine />
-            // <PrivateRoute>
-            // </PrivateRoute>
+            <PrivateRoute>
+              <TimeLine />
+            </PrivateRoute>
           }
         />
       </Routes>
