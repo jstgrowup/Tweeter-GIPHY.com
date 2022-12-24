@@ -13,8 +13,11 @@ import TimeLine from "./TimeLine";
 import UserProfile from "./UserProfile";
 import { BsSun, BsMoonStarsFill } from "react-icons/bs";
 import Footer from "./Footer";
+import { useDispatch } from "react-redux";
+import { getTheUser } from "../store/UserRedux/UserActions";
 function AllRoutes() {
   const { colorMode, toggleColorMode } = useColorMode();
+ 
   return (
     <div style={{ height: "700px" }}>
       <Flex
@@ -57,7 +60,7 @@ function AllRoutes() {
           </Button>
         </NavLink>
         <Button
-         bg={useColorModeValue("white", "black")}
+          bg={useColorModeValue("white", "black")}
           aria-label="Toggle Color Mode"
           onClick={toggleColorMode}
           _focus={{ boxShadow: "none" }}
@@ -72,7 +75,7 @@ function AllRoutes() {
         <Route
           path="/profile"
           element={
-              <UserProfile />
+            <UserProfile />
             // <PrivateRoute>
             // </PrivateRoute>
           }
@@ -80,7 +83,7 @@ function AllRoutes() {
         <Route
           path="/timeline"
           element={
-              <TimeLine />
+            <TimeLine />
             // <PrivateRoute>
             // </PrivateRoute>
           }

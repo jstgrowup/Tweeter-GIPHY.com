@@ -11,7 +11,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Modal,
@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { getTheUser, userLogin } from "../store/UserRedux/UserActions";
+import { getTheUser } from "../store/UserRedux/UserActions";
 
 function UserProfile() {
   const { data } = useSelector((store) => store.user);
@@ -103,6 +103,10 @@ function UserProfile() {
       alert(error.message);
     }
   };
+  useEffect(() => {
+    dispatch(getTheUser());
+  }, []);
+
   return (
     <Center>
       <Center w={"50%"} h={"60%"}>

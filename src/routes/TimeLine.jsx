@@ -23,12 +23,13 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import { BiDislike, BiLike } from "react-icons/bi";
+import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
-    const res = await axios.get("https://mock-v41w.onrender.com/posts");
+    const res = await axios.get("http://localhost:8080/posts");
     const { data } = res;
     return data;
   } catch (error) {
@@ -38,22 +39,20 @@ const getData = async () => {
 function TimeLine() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data } = useSelector((store) => store.user);
+
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
   const [wholeData, setwholeData] = useState([]);
+  console.log("wholeData:", wholeData);
   const [bool, setbool] = useState(false);
   const [text, settext] = useState("");
   const [url, seturl] = useState("");
-  const [likes, setlikes] = useState(0);
-  const [dislikes, setdislikes] = useState(0);
 
   const handleChange = async (e) => {
     let huru = e.target.value;
     try {
       let res = await axios.get(
-        `https://api.giphy.com/v1/gifs/search?api_key=${
-          import.meta.env.VITE_KEY
-        }&q=${huru}&limit=25&offset=0&rating=g&lang=en`
+        `https://api.giphy.com/v1/gifs/search?api_key=HbK8mqA6OKEAQ0aIUVz2FEP3H985n1lM&q=${huru}&limit=25&offset=0&rating=g&lang=en`
       );
       let {
         data: { data },
@@ -69,32 +68,39 @@ function TimeLine() {
     seturl(url);
     onClose();
   };
+  const dispatch = useDispatch();
   useEffect(() => {
     getData()
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
-  }, [bool, likes, dislikes]);
+    dispatch(getTheUser());
+  }, [bool]);
+  const handleSubmit = async () => {
+    const respo = {
+      userId: data._id,
+      userName: data.username,
+      caption: text,
+      url: url,
+    };
 
-  const handleLikesAndDislikes = async (id, type) => {
     try {
-      if (type === "like") {
-        setlikes((prev) => prev + 1);
-        let resp = await axios.patch(
-          `https://mock-v41w.onrender.com/posts/${id}`,
-          {
-            likes: likes,
-          }
-        );
-      } else {
-        setdislikes((prev) => prev + 1);
-        let resp = await axios.patch(
-          `https://mock-v41w.onrender.com/posts/${id}`,
-          {
-            dislikes: dislikes,
-          }
-        );
-      }
-    } catch (error) {}
+      const res = await axios.post(
+        "http://localhost:8080/posts/createPost",
+        respo
+      );
+
+      setbool(!bool);
+
+      seturl(null);
+      toast({
+        title: "Post successfull",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
   const handleDelete = async (id) => {
     try {
@@ -114,32 +120,6 @@ function TimeLine() {
     }
   };
 
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (er) => {
-        reject(er);
-      };
-    });
-  };
-  const handleFileInputChange = async (e) => {
-    const file = e.target.files[0];
-    const base64 = await convertBase64(file);
-
-    try {
-      const res = await axios.post("http://localhost:8080/posts/uploadImage", {
-        image: base64,
-      });
-      console.log(res);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <div>
       <Center>
@@ -155,68 +135,58 @@ function TimeLine() {
             placeholder="Enter your caption"
             border={"1px"}
             borderColor={"black"}
+            name="caption"
             onChange={(e) => settext(e.target.value)}
           />
-          <Input
-            type="file"
-            name="image"
-            onChange={handleFileInputChange}
-            
-          />
-
-          <Button type="submit" colorScheme={"blue"} color={"white"}>
-            POST
-          </Button>
-
-          {/* {previewSource && (
-            <Image
-              w={"100%"}
-              h={"350px"}
-              src={previewSource}
-              alt={"not chosen"}
-            />
-          )} */}
+          {url && <Image w={"100%"} h={"200px"} src={url} />}
           <Flex justify={"space-between"}>
-            {/* <Input
-              placeholder="Choose your file"
-              type={"file"}
-              name={"image"}
-              onChange={handleFileInput}
-              value={file}
-            /> */}
-
-            {/* <Modal isOpen={isOpen} onClose={onClose}>
+            <Button
+              onClick={onOpen}
+              _hover={useColorModeValue("#FFDD00", "#FFDD00")}
+              bg={useColorModeValue("#FFDD00", "#FFDD00")}
+              color={useColorModeValue("black", "black")}
+            >
+              GIF
+            </Button>
+            <Modal isOpen={isOpen} onClose={onClose}>
               <ModalOverlay />
               <ModalContent>
                 <ModalHeader>Search Your GIPHY</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Input
-                    onChange={handleChange}
-                    placeholder="Search your GIPHY"
-                  ></Input>
+                  <Box style={{ overflowY: "scroll", maxHeight: "450px" }}>
+                    <Input
+                      onChange={handleChange}
+                      placeholder="Search your GIPHY"
+                    />
 
-                  {searchdata?.map((el) => {
-                    const { images } = el;
+                    {searchdata?.map((el) => {
+                      const { images } = el;
 
-                    return (
-                      <Box
-                        key={el.id}
-                        onClick={() => handlePost(images.preview_gif.url)}
-                      >
-                        <Image w={"100%"} src={images.preview_gif.url}></Image>
-                      </Box>
-                    );
-                  })}
+                      return (
+                        <Box
+                          key={el.id}
+                          onClick={() => handlePost(images.preview_gif.url)}
+                        >
+                          <Image
+                            w={"100%"}
+                            src={images.preview_gif.url}
+                          ></Image>
+                        </Box>
+                      );
+                    })}
+                  </Box>
                 </ModalBody>
-
                 <ModalFooter>
                   <Button colorScheme="blue" mr={3} onClick={onClose}>
                     Close
                   </Button>
                 </ModalFooter>
               </ModalContent>
-            </Modal> */}
+            </Modal>
+            <Button onClick={handleSubmit} colorScheme={"blue"} color={"white"}>
+              POST
+            </Button>
           </Flex>
         </Box>
       </Center>
@@ -239,17 +209,17 @@ function TimeLine() {
                 w={"100%"}
                 direction={"column"}
                 align={"flex-start"}
-                key={el.id}
+                key={el._id}
               >
                 <Flex w={"100%"} align={"center"} justify={"space-between"}>
                   <Flex align={"center"} gap={"3"}>
                     <Avatar size="md" src={data.img} />
                     <Text fontSize={"lg"} fontWeight={"bold"}>
                       {" "}
-                      {el.username}
+                      {el.userName}
                     </Text>
                   </Flex>
-                  {el.username === data.username && (
+                  {el.userName === data.username && (
                     <Button
                       onClick={() => handleDelete(el.id)}
                       bg={"red.400"}

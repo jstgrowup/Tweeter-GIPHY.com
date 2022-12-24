@@ -46,8 +46,6 @@ function Signup() {
         "http://localhost:8080/user/postUser",
         formData
       );
-      console.log("res:", res);
-
       toast({
         title: "Signup successfull",
         status: "success",
