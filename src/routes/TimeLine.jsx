@@ -43,7 +43,7 @@ function TimeLine() {
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
   const [wholeData, setwholeData] = useState([]);
-  console.log("wholeData:", wholeData);
+
   const [bool, setbool] = useState(false);
   const [text, settext] = useState("");
   const [url, seturl] = useState("");
@@ -60,7 +60,12 @@ function TimeLine() {
 
       setdata(data);
     } catch (error) {
-      console.log(error.message);
+      toast({
+        title: `${error.message}`,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
@@ -82,7 +87,17 @@ function TimeLine() {
       caption: text,
       url: url,
     };
-
+    if (!url || !text) {
+      toast({
+        title: "All the inputs are mendatory",
+        description:
+          "For a successfull post you have to put the cption and select a gif",
+        status: "warning",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
     try {
       const res = await axios.post(
         "http://localhost:8080/posts/createPost",
@@ -99,27 +114,53 @@ function TimeLine() {
         isClosable: true,
       });
     } catch (error) {
-      alert(error.message);
+      toast({
+        title: `${error.message}`,
+
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   const handleDelete = async (id) => {
     try {
-      let resp = await axios.delete(
-        `https://mock-v41w.onrender.com/posts/${id}`
-      );
+      await axios.post(`http://localhost:8080/posts/delete`, {
+        id: id,
+      });
       toast({
         title: "Post deleted successfully",
-
         status: "success",
         duration: 2000,
         isClosable: true,
       });
       setbool(!bool);
     } catch (error) {
-      alert(error.message);
+      toast({
+        title: `${error.message}`,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
+  const handleLikesAndDislikes = async (id, type) => {
+    try {
+      await axios.post("http://localhost:8080/posts/likesAndDislikes", {
+        id: id,
+        type: type,
+      });
+      setbool(!bool);
+    } catch (error) {
+      toast({
+        title: `${error.message}`,
 
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
   return (
     <div>
       <Center>
@@ -154,7 +195,12 @@ function TimeLine() {
                 <ModalHeader>Search Your GIPHY</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                  <Box style={{ overflowY: "scroll", maxHeight: "450px" }}>
+                  <Box
+                    style={{
+                      overflowY: "scroll",
+                      maxHeight: "450px",
+                    }}
+                  >
                     <Input
                       onChange={handleChange}
                       placeholder="Search your GIPHY"
@@ -165,6 +211,7 @@ function TimeLine() {
 
                       return (
                         <Box
+                          cursor={"pointer"}
                           key={el.id}
                           onClick={() => handlePost(images.preview_gif.url)}
                         >
@@ -195,7 +242,6 @@ function TimeLine() {
           mt={"4"}
           w={"50%"}
           gap={"4"}
-          // bg={useColorModeValue("white", "white")}
           color={useColorModeValue("black", "black")}
           direction={"column"}
           align={"flex-start"}
@@ -214,14 +260,20 @@ function TimeLine() {
                 <Flex w={"100%"} align={"center"} justify={"space-between"}>
                   <Flex align={"center"} gap={"3"}>
                     <Avatar size="md" src={data.img} />
-                    <Text fontSize={"lg"} fontWeight={"bold"}>
-                      {" "}
-                      {el.userName}
-                    </Text>
+                    <Flex direction={"column"} gap={"1"}>
+                      <Text fontSize={"lg"} fontWeight={"bold"}>
+                        {" "}
+                        {el.userName}
+                      </Text>
+                      <Text fontSize={"lg"} fontWeight={"bold"}>
+                        {" "}
+                        {el.caption}
+                      </Text>
+                    </Flex>
                   </Flex>
                   {el.userName === data.username && (
                     <Button
-                      onClick={() => handleDelete(el.id)}
+                      onClick={() => handleDelete(el._id)}
                       bg={"red.400"}
                       color={"white"}
                       borderRadius={"3xl"}
@@ -235,12 +287,12 @@ function TimeLine() {
                 <Flex ml={"2"} gap={"3"}>
                   <BiLike
                     className="huru"
-                    onClick={() => handleLikesAndDislikes(el.id, "like")}
+                    onClick={() => handleLikesAndDislikes(el._id, "like")}
                   />
                   <Text fontWeight={"bold"}>{el.likes}</Text>
                   <BiDislike
                     className="huru"
-                    onClick={() => handleLikesAndDislikes(el.id, "dislikes")}
+                    onClick={() => handleLikesAndDislikes(el._id, "dislikes")}
                   />
 
                   <Text fontWeight={"bold"}>{el.dislikes}</Text>
