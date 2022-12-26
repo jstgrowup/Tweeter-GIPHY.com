@@ -165,8 +165,8 @@ function TimeLine() {
     <div>
       <Center>
         <Box
-          w={"50%"}
-          p={"7"}
+          w={["90%", "80%", "70%", "50%"]}
+          p={["2", "4", "5", "7"]}
           boxShadow={"2xl"}
           borderRadius={"2xl"}
           bg={"white"}
@@ -240,7 +240,7 @@ function TimeLine() {
       <Center>
         <Flex
           mt={"4"}
-          w={"50%"}
+          w={["95%", "80%", "70%", "50%"]}
           gap={"4"}
           color={useColorModeValue("black", "black")}
           direction={"column"}

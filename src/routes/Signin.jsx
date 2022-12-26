@@ -13,7 +13,7 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { userLogin } from "../store/UserRedux/UserActions";
+import { getTheUser, userLogin } from "../store/UserRedux/UserActions";
 function Signin() {
   const toast = useToast();
   const dispatch = useDispatch();
@@ -47,7 +47,8 @@ function Signin() {
         duration: 2000,
         isClosable: true,
       });
-      navigate("/profile");
+      
+     
     } catch (e) {
       toast({
         title: `${e.message}`,
@@ -74,7 +75,7 @@ function Signin() {
           <Flex
             direction={"column"}
             align="start"
-            p={["4", "5", "6", "8"]}
+            p={["8", "5", "6", "8"]}
             gap={"3"}
           >
             <Heading>Sign In</Heading>

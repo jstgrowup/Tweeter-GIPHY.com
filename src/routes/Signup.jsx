@@ -56,8 +56,8 @@ function Signup() {
       navigate("/signin");
     } catch (e) {
       toast({
-        title: `${e.message}`,
-        description: "User Already Registered please proceed to signin",
+        title: `${e.response.data}`,
+
         status: "warning",
         duration: 2000,
         isClosable: true,
@@ -79,9 +79,9 @@ function Signup() {
     );
   }
   return (
-    <Center p={"10"}>
+    <Center p={["3", "3", "6", "10"]}>
       <Box
-        w={["300", "420px", "490px", "520px"]}
+        w={["400", "430px", "490px", "520px"]}
         bg={useColorModeValue("white", "white")}
         color={useColorModeValue("black", "black")}
         borderRadius={"2xl"}
@@ -90,7 +90,7 @@ function Signup() {
         <Flex
           direction={"column"}
           align="start"
-          p={["4", "5", "6", "8"]}
+          p={["6", "5", "6", "8"]}
           gap={"3"}
         >
           <Heading>Create Account</Heading>

@@ -32,7 +32,6 @@ const getData = async () => {
   try {
     const res = await axios.get("http://localhost:8080/posts");
     const { data } = res;
-    console.log("data:", data);
 
     return data;
   } catch (error) {
@@ -122,10 +121,21 @@ function UserProfile() {
       alert(error.message);
     }
   };
+  const handleLogout = () => {
+    localStorage.removeItem("lol");
+    window.location.reload();
+    toast({
+      title: "Logout successfull",
+      status: "success",
+      duration: 2000,
+      isClosable: true,
+    });
+    navigate("/signin");
+  };
   return (
     <>
       <Center>
-        <Center w={"50%"} h={"60%"}>
+        <Center w={["90%", "80%", "70%", "50%"]}>
           <Box
             height={"100%"}
             w={"100%"}
@@ -174,6 +184,7 @@ function UserProfile() {
                 Followers {"23"}
               </Button>
               <Button
+                onClick={handleLogout}
                 flex={1}
                 fontSize={"md"}
                 rounded={"full"}
@@ -189,7 +200,7 @@ function UserProfile() {
                   bg: "blue.500",
                 }}
               >
-                Following {"23"}
+                Logout
               </Button>
             </Stack>
             <Stack mt={8} direction={"row"} spacing={4}>
@@ -285,23 +296,22 @@ function UserProfile() {
       <Center>
         <Heading>Your Posts</Heading>
       </Center>
-      <Flex  gap={"3"} align={"center"}>
+      <Flex gap={"3"} align={"center"} direction={"column"}>
         {wholeData?.map((el) => {
           return (
             <Flex
               boxShadow={"2xl"}
               borderRadius={"2xl"}
               bg={"white"}
-              w={"50%"}
+              w={["90%", "80%", "70%", "50%"]}
               direction={"column"}
               align={"flex-start"}
-             
               color={useColorModeValue("black", "black")}
               key={el._id}
             >
               <Flex w={"100%"} align={"center"} justify={"space-between"}>
                 <Flex align={"center"} gap={"3"}>
-                  <Avatar size="md" src={data.img} />
+                  <Avatar border={"2px"} size="md" src={data.img} />
                   <Flex direction={"column"} gap={"1"}>
                     <Text fontSize={"lg"} fontWeight={"bold"}>
                       {" "}
