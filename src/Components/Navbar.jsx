@@ -1,7 +1,7 @@
 import React from "react";
 import {
   Button,
-  Flex,
+
   HStack,
   useColorMode,
   useColorModeValue,
@@ -13,7 +13,7 @@ import {
   DrawerOverlay,
   useDisclosure,
   Box,
-  Image,
+
 } from "@chakra-ui/react";
 import { FaUserAlt } from "react-icons/fa";
 import { HamburgerIcon } from "@chakra-ui/icons";

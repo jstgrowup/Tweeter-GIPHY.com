@@ -2,7 +2,7 @@ import { UserLoginsuccess } from "./UserActionsTypes";
 import axios from "axios";
 export const userLogin = (payload) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:8080/user/login", payload);
+    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/user/login", payload);
     const { data } = res;
     const id = data._id;
     localStorage.setItem("lol", id);
@@ -18,7 +18,7 @@ export const userLogin = (payload) => async (dispatch) => {
 export const getTheUser = () => async (dispatch) => {
   const id = localStorage.getItem("lol");
   try {
-    const res = await axios.post("http://localhost:8080/user/getuser", {
+    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/user/getuser", {
       id: id,
     });
     const { data } = res;

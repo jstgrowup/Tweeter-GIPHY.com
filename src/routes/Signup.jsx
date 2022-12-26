@@ -43,7 +43,7 @@ function Signup() {
     }
     try {
       const res = await axios.post(
-        "http://localhost:8080/user/postUser",
+        "https://smoggy-worm-hospital-gown.cyclic.app/user/postUser",
         formData
       );
       toast({

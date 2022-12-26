@@ -29,7 +29,7 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
-    const res = await axios.get("http://localhost:8080/posts");
+    const res = await axios.get("https://smoggy-worm-hospital-gown.cyclic.app/posts");
     const { data } = res;
     return data;
   } catch (error) {
@@ -100,7 +100,7 @@ function TimeLine() {
     }
     try {
       const res = await axios.post(
-        "http://localhost:8080/posts/createPost",
+        "https://smoggy-worm-hospital-gown.cyclic.app/posts/createPost",
         respo
       );
 
@@ -125,7 +125,7 @@ function TimeLine() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.post(`http://localhost:8080/posts/delete`, {
+      await axios.post(`https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`, {
         id: id,
       });
       toast({
@@ -146,7 +146,7 @@ function TimeLine() {
   };
   const handleLikesAndDislikes = async (id, type) => {
     try {
-      await axios.post("http://localhost:8080/posts/likesAndDislikes", {
+      await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/posts/likesAndDislikes", {
         id: id,
         type: type,
       });

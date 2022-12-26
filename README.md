@@ -38,9 +38,9 @@ This is Social media website where users can create an account , signin and than
 - ## Sign up and Sign in Page
   This website allows users to create their own account filling the details like username,fullname,emailid,password and login in using the required username, email id and passowrd and will search in the server the user if he find the user than only the user will be logged in. If the required details are missing, the user won't be able to login into the website. Without the users signed in, the user would not be able access the user profile page as well as timeline page.
 - ## User Profile Page
-  This is a user profile page where the user can see his own profile where the user can update his profile as well as delete his profile
+  This is a user profile page where the user can see his own profile where the user can update his profile as well as delete his profile , Logout and see all the posts he has posted till that date.
 - ## TimeLine Page
-  This is a time line page where the user can see all the posts that other users had posted the user can post a caption along with a gif , by clicking on the gif button a modal will be shown where he can search a paticular type of GIF and then post it , the user can like other people posts and dislike them as well
+  This is a time line page where the user can see all the posts that other users had posted the user can post a caption along with a gif , by clicking on the gif button a modal will be shown where he can search a paticular type of GIF and then post it , the user can like other people posts and dislike them as well and everything will be updated in the backend in the real time 
 
 # Tech Stacks for frontend
 
@@ -51,7 +51,9 @@ This is Social media website where users can create an account , signin and than
 
 # Teach Stacks for backend
 
-- JSON server
+- MongoDB
+- ExpressJS
+- NodeJS
 
 # Video Explaination
 
