@@ -260,12 +260,12 @@ function TimeLine() {
                 <Flex w={"100%"} align={"center"} justify={"space-between"}>
                   <Flex align={"center"} gap={"3"}>
                     <Avatar size="md" src={data.img} />
-                    <Flex direction={"column"} gap={"1"}>
+                    <Flex direction={"column"} >
                       <Text fontSize={"lg"} fontWeight={"bold"}>
                         {" "}
                         {el.userName}
                       </Text>
-                      <Text fontSize={"lg"} fontWeight={"bold"}>
+                      <Text fontSize={"lg"} >
                         {" "}
                         {el.caption}
                       </Text>

@@ -47,8 +47,7 @@ function Signin() {
         duration: 2000,
         isClosable: true,
       });
-      
-     
+      navigate("/timeline");
     } catch (e) {
       toast({
         title: `${e.message}`,
@@ -83,7 +82,7 @@ function Signin() {
               User Name{" "}
             </Text>
             <Input
-              // color={"black"}
+            
               borderColor={"black"}
               type={"text"}
               name={"username"}
@@ -95,7 +94,7 @@ function Signin() {
               EMAIL ID{" "}
             </Text>
             <Input
-              // color={"black"}
+           
               borderColor={"black"}
               type={"text"}
               name={"email"}
@@ -104,7 +103,7 @@ function Signin() {
             ></Input>
             <Text fontSize={"sm"}>Password</Text>
             <Input
-              // color={"black"}
+            
               borderColor={"black"}
               type={"text"}
               name={"password"}
