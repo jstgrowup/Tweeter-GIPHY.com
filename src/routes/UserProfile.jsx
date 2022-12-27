@@ -29,12 +29,12 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
+  const token = localStorage.getItem("lol");
   try {
-    const res = await axios.get(
-      "http://localhost:8080/posts"
-    );
+    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/posts/getUsersPosts", {
+      token: token,
+    });
     const { data } = res;
-
     return data;
   } catch (error) {
     console.log("error:", error);
@@ -69,18 +69,11 @@ function UserProfile() {
     }
 
     try {
-      let resp = await axios.patch(
-        `http://localhost:8080/user/updateUser/${id}`,
-        {
-          fullname: fullname,
-          email: email,
-          password: password,
-        }
-      );
-
-      const {
-        data: { _id },
-      } = resp;
+      await axios.patch(`https://smoggy-worm-hospital-gown.cyclic.app/user/updateUser/${id}`, {
+        fullname: fullname,
+        email: email,
+        password: password,
+      });
 
       onClose();
       toast({
@@ -89,7 +82,7 @@ function UserProfile() {
         duration: 2000,
         isClosable: true,
       });
-      dispatch(getTheUser(_id));
+      dispatch(getTheUser());
     } catch (e) {
       onClose();
       toast({
@@ -299,61 +292,63 @@ function UserProfile() {
         <Heading>Your Posts</Heading>
       </Center>
       <Flex gap={"3"} align={"center"} direction={"column"}>
-        {wholeData?.map((el) => {
-          return (
-            <Flex
-              boxShadow={"2xl"}
-              borderRadius={"2xl"}
-              bg={"white"}
-              w={["90%", "80%", "70%", "50%"]}
-              direction={"column"}
-              align={"flex-start"}
-              color={useColorModeValue("black", "black")}
-              key={el._id}
-            >
-              <Flex w={"100%"} align={"center"} justify={"space-between"}>
-                <Flex align={"center"} gap={"3"}>
-                  <Avatar border={"2px"} size="md" src={data.img} />
-                  <Flex direction={"column"} gap={"1"}>
-                    <Text fontSize={"lg"} fontWeight={"bold"}>
-                      {" "}
-                      {el.userName}
-                    </Text>
-                    <Text fontSize={"lg"} fontWeight={"bold"}>
-                      {" "}
-                      {el.caption}
-                    </Text>
+        {wholeData.length > 0
+          ? wholeData.map((el) => {
+              return (
+                <Flex
+                  boxShadow={"2xl"}
+                  borderRadius={"2xl"}
+                  bg={"white"}
+                  w={["90%", "80%", "70%", "50%"]}
+                  direction={"column"}
+                  align={"flex-start"}
+                  color={useColorModeValue("black", "black")}
+                  key={el._id}
+                >
+                  <Flex w={"100%"} align={"center"} justify={"space-between"}>
+                    <Flex align={"center"} gap={"3"}>
+                      <Avatar border={"2px"} size="md" src={data.img} />
+                      <Flex direction={"column"} gap={"1"}>
+                        <Text fontSize={"lg"} fontWeight={"bold"}>
+                          {" "}
+                          {el.userName}
+                        </Text>
+                        <Text fontSize={"lg"} fontWeight={"bold"}>
+                          {" "}
+                          {el.caption}
+                        </Text>
+                      </Flex>
+                    </Flex>
+                    {el.userName === data.username && (
+                      <Button
+                        onClick={() => handleDelete(el._id)}
+                        bg={"red.400"}
+                        color={"white"}
+                        borderRadius={"3xl"}
+                      >
+                        DELETE
+                      </Button>
+                    )}
+                  </Flex>
+                  <Text>{el.title}</Text>
+                  <Image w={"100%"} h={"300px"} src={el.url}></Image>
+                  <Flex ml={"2"} gap={"3"}>
+                    <BiLike
+                      className="huru"
+                      onClick={() => handleLikesAndDislikes(el._id, "like")}
+                    />
+                    <Text fontWeight={"bold"}>{el.likes}</Text>
+                    <BiDislike
+                      className="huru"
+                      onClick={() => handleLikesAndDislikes(el._id, "dislikes")}
+                    />
+
+                    <Text fontWeight={"bold"}>{el.dislikes}</Text>
                   </Flex>
                 </Flex>
-                {el.userName === data.username && (
-                  <Button
-                    onClick={() => handleDelete(el._id)}
-                    bg={"red.400"}
-                    color={"white"}
-                    borderRadius={"3xl"}
-                  >
-                    DELETE
-                  </Button>
-                )}
-              </Flex>
-              <Text>{el.title}</Text>
-              <Image w={"100%"} h={"300px"} src={el.url}></Image>
-              <Flex ml={"2"} gap={"3"}>
-                <BiLike
-                  className="huru"
-                  onClick={() => handleLikesAndDislikes(el._id, "like")}
-                />
-                <Text fontWeight={"bold"}>{el.likes}</Text>
-                <BiDislike
-                  className="huru"
-                  onClick={() => handleLikesAndDislikes(el._id, "dislikes")}
-                />
-
-                <Text fontWeight={"bold"}>{el.dislikes}</Text>
-              </Flex>
-            </Flex>
-          );
-        })}
+              );
+            })
+          : null}
       </Flex>
     </>
   );

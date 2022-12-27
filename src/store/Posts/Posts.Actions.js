@@ -1,7 +1,7 @@
 export const getAllPostsActions = () => async (dispatch) => {
   try {
     const res = await axios.get(
-      "http://localhost:8080/user/login",
+      "https://smoggy-worm-hospital-gown.cyclic.app/user/login",
       payload
     );
 

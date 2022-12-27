@@ -30,10 +30,11 @@ import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
     const res = await axios.get(
-      // "https://smoggy-worm-hospital-gown.cyclic.app/posts"
-      "http://localhost:8080/posts"
+      "https://smoggy-worm-hospital-gown.cyclic.app/posts"
+      // "http://localhost:8080/posts"
     );
     const { data } = res;
+    console.log("data:", data);
     return data;
   } catch (error) {
     return error.message;
@@ -42,6 +43,7 @@ const getData = async () => {
 function TimeLine() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data } = useSelector((store) => store.user);
+  console.log("data:", data);
 
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
@@ -105,7 +107,7 @@ function TimeLine() {
     }
     try {
       const res = await axios.post(
-        "http://localhost:8080/posts/createPost",
+        "https://smoggy-worm-hospital-gown.cyclic.app/posts/createPost",
         respo
       );
 
@@ -279,7 +281,7 @@ function TimeLine() {
                       <Text fontSize={"lg"}> {el.caption}</Text>
                     </Flex>
                   </Flex>
-                  {el.userName === data.username && (
+                  {el.userId === data._id && (
                     <Button
                       onClick={() => handleDelete(el._id)}
                       bg={"red.400"}
