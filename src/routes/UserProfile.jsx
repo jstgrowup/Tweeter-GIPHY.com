@@ -117,6 +117,7 @@ function UserProfile() {
     }
   };
   const handleLogout = () => {
+    navigate("/");
     localStorage.removeItem("lol");
     window.location.reload();
     toast({
@@ -125,7 +126,6 @@ function UserProfile() {
       duration: 2000,
       isClosable: true,
     });
-    navigate("/signin");
   };
   return (
     <>
