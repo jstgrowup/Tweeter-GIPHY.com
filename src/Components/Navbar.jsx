@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Button,
-
   HStack,
   useColorMode,
   useColorModeValue,
@@ -13,7 +12,7 @@ import {
   DrawerOverlay,
   useDisclosure,
   Box,
-
+  Flex,
 } from "@chakra-ui/react";
 import { FaUserAlt } from "react-icons/fa";
 import { HamburgerIcon } from "@chakra-ui/icons";
@@ -25,7 +24,6 @@ function Navbar() {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
     <div>
-      {" "}
       <HStack
         display={{ base: "none", md: "flex" }}
         bg={useColorModeValue("#166FE6", "#166FE6")}
@@ -76,14 +74,26 @@ function Navbar() {
           {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
         </Button>
       </HStack>
-      <Button
-        display={{ base: "flex", md: "none" }}
-        variant={"none"}
-        onClick={onOpen}
+      <Flex
+        height={["70px", "70px", "0px", "0px"]}
+        align={"center"}
+        justify={"flex-end"}
+        bg={useColorModeValue("#166FE6", "#166FE6")}
       >
-        <HamburgerIcon boxSize={7} />
-      </Button>
-      <Drawer onClose={onClose} isOpen={isOpen} size={"full"}>
+        <Button
+          display={{ base: "flex", md: "none" }}
+          variant={"none"}
+          onClick={onOpen}
+        >
+          <HamburgerIcon boxSize={8} color={"white"} />
+        </Button>
+      </Flex>
+      <Drawer
+        onClose={onClose}
+        isOpen={isOpen}
+        size={"full"}
+        bg={useColorModeValue("#166FE6", "#166FE6")}
+      >
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -95,7 +105,7 @@ function Navbar() {
                 size={"lg"}
                 as={NavLink}
                 to={"/signin"}
-                bg={"#32AEB0"}
+                bg={"#166FE6"}
                 color={"white"}
                 letterSpacing={1}
               >
@@ -108,7 +118,7 @@ function Navbar() {
                 size={"lg"}
                 as={NavLink}
                 to={"/"}
-                bg={"#32AEB0"}
+                bg={"#166FE6"}
                 color={"white"}
                 letterSpacing={1}
               >
@@ -121,7 +131,7 @@ function Navbar() {
                 size={"lg"}
                 as={NavLink}
                 to={"/profile"}
-                bg={"#32AEB0"}
+                bg={"#166FE6"}
                 color={"white"}
                 letterSpacing={1}
                 leftIcon={<FaUserAlt />}
@@ -135,7 +145,7 @@ function Navbar() {
                 size={"lg"}
                 as={NavLink}
                 to={"/timeline"}
-                bg={"#32AEB0"}
+                bg={"#166FE6"}
                 color={"white"}
                 letterSpacing={1}
               >

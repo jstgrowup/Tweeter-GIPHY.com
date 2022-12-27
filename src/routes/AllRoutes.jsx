@@ -11,7 +11,7 @@ import Navbar from "../Components/Navbar";
 
 function AllRoutes() {
   return (
-    <div style={{ height: "700px" }}>
+    <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Signup />} />
