@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 function Signup() {
   const toast = useToast();
   const [loading, setloading] = useState(false);
@@ -29,6 +30,24 @@ function Signup() {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
+  const notify = () => {
+    return toast({
+      title: "Welcome! to tweeter",
+      description: "If you already have an account please Login",
+      position: "top-left",
+      status: "loading",
+      variant: "left-accent",
+      containerStyle: {
+        width: "100px",
+        height: "100%",
+      },
+      isClosable: true,
+      duration: 2000,
+    });
+  };
+  useEffect(() => {
+    notify();
+  }, []);
 
   const postUser = async () => {
     const { email, fullname, password } = formData;
