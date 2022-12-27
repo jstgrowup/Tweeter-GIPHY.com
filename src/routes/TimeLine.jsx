@@ -29,7 +29,9 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
-    const res = await axios.get("https://smoggy-worm-hospital-gown.cyclic.app/posts");
+    const res = await axios.get(
+      "https://smoggy-worm-hospital-gown.cyclic.app/posts"
+    );
     const { data } = res;
     return data;
   } catch (error) {
@@ -52,7 +54,9 @@ function TimeLine() {
     let huru = e.target.value;
     try {
       let res = await axios.get(
-        `https://api.giphy.com/v1/gifs/search?api_key=HbK8mqA6OKEAQ0aIUVz2FEP3H985n1lM&q=${huru}&limit=25&offset=0&rating=g&lang=en`
+        `https://api.giphy.com/v1/gifs/search?api_key=${
+          import.meta.env.VITE_KEY
+        }&q=${huru}&limit=25&offset=0&rating=g&lang=en`
       );
       let {
         data: { data },
@@ -125,9 +129,12 @@ function TimeLine() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.post(`https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`, {
-        id: id,
-      });
+      await axios.post(
+        `https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`,
+        {
+          id: id,
+        }
+      );
       toast({
         title: "Post deleted successfully",
         status: "success",
@@ -146,10 +153,13 @@ function TimeLine() {
   };
   const handleLikesAndDislikes = async (id, type) => {
     try {
-      await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/posts/likesAndDislikes", {
-        id: id,
-        type: type,
-      });
+      await axios.post(
+        "https://smoggy-worm-hospital-gown.cyclic.app/posts/likesAndDislikes",
+        {
+          id: id,
+          type: type,
+        }
+      );
       setbool(!bool);
     } catch (error) {
       toast({
@@ -260,15 +270,12 @@ function TimeLine() {
                 <Flex w={"100%"} align={"center"} justify={"space-between"}>
                   <Flex align={"center"} gap={"3"}>
                     <Avatar size="md" src={data.img} />
-                    <Flex direction={"column"} >
+                    <Flex direction={"column"}>
                       <Text fontSize={"lg"} fontWeight={"bold"}>
                         {" "}
                         {el.userName}
                       </Text>
-                      <Text fontSize={"lg"} >
-                        {" "}
-                        {el.caption}
-                      </Text>
+                      <Text fontSize={"lg"}> {el.caption}</Text>
                     </Flex>
                   </Flex>
                   {el.userName === data.username && (
