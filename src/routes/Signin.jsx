@@ -48,6 +48,12 @@ function Signin() {
         isClosable: true,
       });
       navigate("/timeline");
+      toast({
+        title: "You can now proceeed to timeline",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
     } catch (e) {
       toast({
         title: `${e.message}`,
