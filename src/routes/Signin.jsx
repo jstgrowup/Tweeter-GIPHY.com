@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -63,6 +63,10 @@ function Signin() {
       });
     }
   };
+  useEffect(() => {
+    dispatch(getTheUser());
+  }, []);
+
   const handleSubmit = () => {
     postUser();
   };
@@ -88,7 +92,6 @@ function Signin() {
               User Name{" "}
             </Text>
             <Input
-            
               borderColor={"black"}
               type={"text"}
               name={"username"}
@@ -100,7 +103,6 @@ function Signin() {
               EMAIL ID{" "}
             </Text>
             <Input
-           
               borderColor={"black"}
               type={"text"}
               name={"email"}
@@ -109,7 +111,6 @@ function Signin() {
             ></Input>
             <Text fontSize={"sm"}>Password</Text>
             <Input
-            
               borderColor={"black"}
               type={"text"}
               name={"password"}

@@ -30,7 +30,8 @@ import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
     const res = await axios.get(
-      "https://smoggy-worm-hospital-gown.cyclic.app/posts"
+      // "https://smoggy-worm-hospital-gown.cyclic.app/posts"
+      "http://localhost:8080/posts"
     );
     const { data } = res;
     return data;
@@ -104,7 +105,7 @@ function TimeLine() {
     }
     try {
       const res = await axios.post(
-        "https://smoggy-worm-hospital-gown.cyclic.app/posts/createPost",
+        "http://localhost:8080/posts/createPost",
         respo
       );
 

@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 function PrivateRoute({ children }) {
   const { data } = useSelector((store) => store.user);
 
-  if (!data.username) {
+  if (!data._id) {
     return <Navigate to={"/signin"} />;
   }
 

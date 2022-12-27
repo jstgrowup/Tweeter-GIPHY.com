@@ -1,27 +1,32 @@
-import { UserLoginsuccess } from "./UserActionsTypes";
+import { UserLoginsuccess, UserTokenSuccess } from "./UserActionsTypes";
 import axios from "axios";
 export const userLogin = (payload) => async (dispatch) => {
   try {
-    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/user/login", payload);
-    const { data } = res;
-    const id = data._id;
-    localStorage.setItem("lol", id);
+    const res = await axios.post("http://localhost:8080/user/login", payload);
+   
+    const {
+      data: { token },
+    } = res;
+
+    localStorage.setItem("lol", token);
+
     dispatch({
-      type: UserLoginsuccess,
-      payload: data,
+      type: UserTokenSuccess,
+      payload: token,
     });
-    return data;
+    return token;
   } catch (error) {
     console.log(error.message);
   }
 };
 export const getTheUser = () => async (dispatch) => {
-  const id = localStorage.getItem("lol");
+  const huru = localStorage.getItem("lol");
   try {
-    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/user/getuser", {
-      id: id,
+    const res = await axios.post("http://localhost:8080/user/getuser", {
+      token: huru,
     });
     const { data } = res;
+    
     dispatch({
       type: UserLoginsuccess,
       payload: data,
