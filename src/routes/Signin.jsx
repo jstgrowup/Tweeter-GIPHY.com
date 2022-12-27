@@ -63,9 +63,9 @@ function Signin() {
       });
     }
   };
-  useEffect(() => {
-    dispatch(getTheUser());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getTheUser());
+  // }, []);
 
   const handleSubmit = () => {
     postUser();

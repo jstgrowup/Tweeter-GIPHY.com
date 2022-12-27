@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 function PrivateRoute({ children }) {
-  const { data } = useSelector((store) => store.user);
+  const { token } = useSelector((store) => store.user);
 
-  if (!data._id) {
+  if (!token) {
     return <Navigate to={"/signin"} />;
   }
 

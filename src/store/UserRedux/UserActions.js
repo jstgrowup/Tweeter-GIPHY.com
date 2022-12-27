@@ -4,6 +4,7 @@ export const userLogin = (payload) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:8080/user/login", payload);
    
+   
     const {
       data: { token },
     } = res;
@@ -21,6 +22,8 @@ export const userLogin = (payload) => async (dispatch) => {
 };
 export const getTheUser = () => async (dispatch) => {
   const huru = localStorage.getItem("lol");
+  console.log('huru:', huru)
+ 
   try {
     const res = await axios.post("http://localhost:8080/user/getuser", {
       token: huru,
