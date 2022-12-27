@@ -30,7 +30,9 @@ import { useNavigate } from "react-router-dom";
 import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
-    const res = await axios.get("http://localhost:8080/posts");
+    const res = await axios.get(
+      "https://smoggy-worm-hospital-gown.cyclic.app/posts"
+    );
     const { data } = res;
 
     return data;
