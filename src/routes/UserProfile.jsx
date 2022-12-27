@@ -31,7 +31,7 @@ import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   const token = localStorage.getItem("lol");
   try {
-    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/posts/getUsersPosts", {
+    const res = await axios.post("http://localhost:8080/posts/getUsersPosts", {
       token: token,
     });
     const { data } = res;
@@ -43,6 +43,7 @@ const getData = async () => {
 };
 function UserProfile() {
   const { data } = useSelector((store) => store.user);
+
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [wholeData, setwholeData] = useState([]);
@@ -69,7 +70,7 @@ function UserProfile() {
     }
 
     try {
-      await axios.patch(`https://smoggy-worm-hospital-gown.cyclic.app/user/updateUser/${id}`, {
+      await axios.patch(`http://localhost:8080/user/updateUser/${id}`, {
         fullname: fullname,
         email: email,
         password: password,
@@ -104,13 +105,14 @@ function UserProfile() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://mock-v41w.onrender.com/users/${id}`);
+      await axios.post("http://localhost:8080/user/delete", { id: id });
       toast({
         title: "Deleted successfully",
         status: "success",
         duration: 2000,
         isClosable: true,
       });
+      localStorage.removeItem("lol");
       navigate("/");
     } catch (error) {
       alert(error.message);
@@ -119,7 +121,7 @@ function UserProfile() {
   const handleLogout = () => {
     navigate("/");
     localStorage.removeItem("lol");
-    // window.location.reload();
+
     toast({
       title: "Logout successfull",
       status: "success",
@@ -271,7 +273,7 @@ function UserProfile() {
                 rounded={"full"}
                 bg={"red.500"}
                 color={"white"}
-                onClick={() => handleDelete(data.id)}
+                onClick={() => handleDelete(data._id)}
                 boxShadow={
                   "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
                 }
@@ -292,63 +294,65 @@ function UserProfile() {
         <Heading>Your Posts</Heading>
       </Center>
       <Flex gap={"3"} align={"center"} direction={"column"}>
-        {wholeData.length > 0
-          ? wholeData.map((el) => {
-              return (
-                <Flex
-                  boxShadow={"2xl"}
-                  borderRadius={"2xl"}
-                  bg={"white"}
-                  w={["90%", "80%", "70%", "50%"]}
-                  direction={"column"}
-                  align={"flex-start"}
-                  color={useColorModeValue("black", "black")}
-                  key={el._id}
-                >
-                  <Flex w={"100%"} align={"center"} justify={"space-between"}>
-                    <Flex align={"center"} gap={"3"}>
-                      <Avatar border={"2px"} size="md" src={data.img} />
-                      <Flex direction={"column"} gap={"1"}>
-                        <Text fontSize={"lg"} fontWeight={"bold"}>
-                          {" "}
-                          {el.userName}
-                        </Text>
-                        <Text fontSize={"lg"} fontWeight={"bold"}>
-                          {" "}
-                          {el.caption}
-                        </Text>
-                      </Flex>
+        {wholeData.length > 0 ? (
+          wholeData.map((el) => {
+            return (
+              <Flex
+                boxShadow={"2xl"}
+                borderRadius={"2xl"}
+                bg={"white"}
+                w={["90%", "80%", "70%", "50%"]}
+                direction={"column"}
+                align={"flex-start"}
+                color={useColorModeValue("black", "black")}
+                key={el._id}
+              >
+                <Flex w={"100%"} align={"center"} justify={"space-between"}>
+                  <Flex align={"center"} gap={"3"}>
+                    <Avatar border={"2px"} size="md" src={data.img} />
+                    <Flex direction={"column"} gap={"1"}>
+                      <Text fontSize={"lg"} fontWeight={"bold"}>
+                        {" "}
+                        {el.userName}
+                      </Text>
+                      <Text fontSize={"lg"} fontWeight={"bold"}>
+                        {" "}
+                        {el.caption}
+                      </Text>
                     </Flex>
-                    {el.userName === data.username && (
-                      <Button
-                        onClick={() => handleDelete(el._id)}
-                        bg={"red.400"}
-                        color={"white"}
-                        borderRadius={"3xl"}
-                      >
-                        DELETE
-                      </Button>
-                    )}
                   </Flex>
-                  <Text>{el.title}</Text>
-                  <Image w={"100%"} h={"300px"} src={el.url}></Image>
-                  <Flex ml={"2"} gap={"3"}>
-                    <BiLike
-                      className="huru"
-                      onClick={() => handleLikesAndDislikes(el._id, "like")}
-                    />
-                    <Text fontWeight={"bold"}>{el.likes}</Text>
-                    <BiDislike
-                      className="huru"
-                      onClick={() => handleLikesAndDislikes(el._id, "dislikes")}
-                    />
-
-                    <Text fontWeight={"bold"}>{el.dislikes}</Text>
-                  </Flex>
+                  {el.userName === data.username && (
+                    <Button
+                      onClick={() => handleDelete(el._id)}
+                      bg={"red.400"}
+                      color={"white"}
+                      borderRadius={"3xl"}
+                    >
+                      DELETE
+                    </Button>
+                  )}
                 </Flex>
-              );
-            })
-          : null}
+                <Text>{el.title}</Text>
+                <Image w={"100%"} h={"300px"} src={el.url}></Image>
+                <Flex ml={"2"} gap={"3"}>
+                  <BiLike
+                    className="huru"
+                    onClick={() => handleLikesAndDislikes(el._id, "like")}
+                  />
+                  <Text fontWeight={"bold"}>{el.likes}</Text>
+                  <BiDislike
+                    className="huru"
+                    onClick={() => handleLikesAndDislikes(el._id, "dislikes")}
+                  />
+
+                  <Text fontWeight={"bold"}>{el.dislikes}</Text>
+                </Flex>
+              </Flex>
+            );
+          })
+        ) : (
+          <Image src="https://img.republicworld.com/republic-prod/stories/promolarge/xhdpi/1kutzil5lj0nvfsf_1596544016.jpeg" />
+        )}
       </Flex>
     </>
   );

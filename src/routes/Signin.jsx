@@ -47,25 +47,24 @@ function Signin() {
         duration: 2000,
         isClosable: true,
       });
-      navigate("/timeline");
+
       toast({
         title: "You can now proceeed to timeline",
         status: "success",
         duration: 2000,
         isClosable: true,
       });
+      navigate("/timeline");
     } catch (e) {
+      
       toast({
-        title: `${e.message}`,
+        title: `${e.response.data}`,
         status: "error",
         duration: 2000,
         isClosable: true,
       });
     }
   };
-  // useEffect(() => {
-  //   dispatch(getTheUser());
-  // }, []);
 
   const handleSubmit = () => {
     postUser();

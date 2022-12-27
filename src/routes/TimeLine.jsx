@@ -30,11 +30,11 @@ import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
     const res = await axios.get(
-      "https://smoggy-worm-hospital-gown.cyclic.app/posts"
+      "http://localhost:8080/posts"
       // "http://localhost:8080/posts"
     );
     const { data } = res;
-    console.log("data:", data);
+
     return data;
   } catch (error) {
     return error.message;
@@ -43,7 +43,7 @@ const getData = async () => {
 function TimeLine() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data } = useSelector((store) => store.user);
-  console.log("data:", data);
+
 
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
@@ -107,7 +107,7 @@ function TimeLine() {
     }
     try {
       const res = await axios.post(
-        "https://smoggy-worm-hospital-gown.cyclic.app/posts/createPost",
+        "http://localhost:8080/posts/createPost",
         respo
       );
 
@@ -133,7 +133,7 @@ function TimeLine() {
   const handleDelete = async (id) => {
     try {
       await axios.post(
-        `https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`,
+        `http://localhost:8080/posts/delete`,
         {
           id: id,
         }
@@ -157,7 +157,7 @@ function TimeLine() {
   const handleLikesAndDislikes = async (id, type) => {
     try {
       await axios.post(
-        "https://smoggy-worm-hospital-gown.cyclic.app/posts/likesAndDislikes",
+        "http://localhost:8080/posts/likesAndDislikes",
         {
           id: id,
           type: type,
