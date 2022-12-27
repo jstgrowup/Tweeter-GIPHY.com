@@ -119,7 +119,7 @@ function UserProfile() {
   const handleLogout = () => {
     navigate("/");
     localStorage.removeItem("lol");
-    window.location.reload();
+    // window.location.reload();
     toast({
       title: "Logout successfull",
       status: "success",
