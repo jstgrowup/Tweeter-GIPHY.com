@@ -6,6 +6,8 @@ import {
   Flex,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Text,
   useColorModeValue,
   useToast,
@@ -13,8 +15,12 @@ import {
 
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { getTheUser, userLogin } from "../store/UserRedux/UserActions";
 function Signin() {
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+
   const toast = useToast();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,7 +62,6 @@ function Signin() {
       });
       navigate("/timeline");
     } catch (e) {
-      
       toast({
         title: `${e.response.data}`,
         status: "error",
@@ -109,13 +114,19 @@ function Signin() {
               placeholder="Enter your Email Id"
             ></Input>
             <Text fontSize={"sm"}>Password</Text>
-            <Input
-              borderColor={"black"}
-              type={"text"}
-              name={"password"}
-              onChange={handleChange}
-              placeholder="Enter Your Password"
-            ></Input>
+            <InputGroup size="md">
+              <Input
+                pr="4.5rem"
+                borderColor={"black"}
+                type={show ? "text" : "password"}
+                name={"password"}
+                onChange={handleChange}
+                placeholder="Enter Your Password"
+              />
+              <InputRightElement onClick={handleClick} cursor={"pointer"}>
+                {show ? <ViewIcon boxSize={5} /> : <ViewOffIcon boxSize={5} />}
+              </InputRightElement>
+            </InputGroup>
 
             <Button
               onClick={handleSubmit}

@@ -6,6 +6,8 @@ import {
   Flex,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
   Spinner,
   Text,
   useColorModeValue,
@@ -13,8 +15,10 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 function Signup() {
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
   const toast = useToast();
   const [loading, setloading] = useState(false);
   const navigate = useNavigate();
@@ -144,13 +148,19 @@ function Signup() {
             placeholder="Enter your Email Id"
           ></Input>
           <Text fontSize={"sm"}>Password</Text>
-          <Input
-            borderColor={"black"}
-            type={"text"}
-            name={"password"}
-            onChange={handleChange}
-            placeholder="Enter Your Password"
-          ></Input>
+          <InputGroup size="md">
+            <Input
+              pr="4.5rem"
+              borderColor={"black"}
+              type={show ? "text" : "password"}
+              name={"password"}
+              onChange={handleChange}
+              placeholder="Enter Your Password"
+            />
+            <InputRightElement onClick={handleClick} cursor={"pointer"}>
+              {show ? <ViewIcon boxSize={5} /> : <ViewOffIcon boxSize={5} />}
+            </InputRightElement>
+          </InputGroup>
 
           <Button
             onClick={handleSubmit}

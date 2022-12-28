@@ -43,6 +43,7 @@ const getData = async () => {
 };
 function UserProfile() {
   const { data } = useSelector((store) => store.user);
+  console.log('data:', data)
 
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
