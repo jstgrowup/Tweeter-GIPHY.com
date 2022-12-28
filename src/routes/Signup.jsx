@@ -41,10 +41,6 @@ function Signup() {
       position: "top-left",
       status: "loading",
       variant: "left-accent",
-      containerStyle: {
-        width: "100px",
-        height: "100%",
-      },
       isClosable: true,
       duration: 2000,
     });
