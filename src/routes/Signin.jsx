@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -13,17 +13,16 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { getTheUser, userLogin } from "../store/UserRedux/UserActions";
+import { userLogin } from "../store/UserRedux/UserActions";
 function Signin() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
   const toast = useToast();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const [formData, setformData] = useState({
     username: "",
     email: "",
@@ -35,6 +34,17 @@ function Signin() {
     setformData({ ...formData, [name]: value });
   };
 
+  const notify = () => {
+    return toast({
+      title: "Welcome! back",
+      description: "You can now proceeed to timeline",
+      position: "top-left",
+      status: "loading",
+      variant: "left-accent",
+      isClosable: true,
+      duration: 2000,
+    });
+  };
   const postUser = async () => {
     const { email, username, password } = formData;
     if (!email || !username || !password) {
@@ -54,13 +64,7 @@ function Signin() {
         isClosable: true,
       });
 
-      toast({
-        title: "You can now proceeed to timeline",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
-      navigate("/timeline");
+      notify();
     } catch (e) {
       toast({
         title: `${e.response.data}`,

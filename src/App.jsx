@@ -6,7 +6,7 @@ import PrivateRoute from "./Private/PrivateRoute";
 import UserProfile from "./routes/UserProfile";
 import TimeLine from "./routes/TimeLine";
 import Footer from "./Components/Footer";
-import "./App";
+
 import { Box, useColorModeValue } from "@chakra-ui/react";
 function App() {
   return (

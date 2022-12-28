@@ -43,7 +43,6 @@ const getData = async () => {
 };
 function UserProfile() {
   const { data } = useSelector((store) => store.user);
-  console.log('data:', data)
 
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -114,13 +113,13 @@ function UserProfile() {
         isClosable: true,
       });
       localStorage.removeItem("lol");
-      navigate("/");
+      navigate("/signin");
     } catch (error) {
       alert(error.message);
     }
   };
   const handleLogout = () => {
-    navigate("/");
+    navigate("/signin");
     localStorage.removeItem("lol");
 
     toast({
@@ -186,16 +185,16 @@ function UserProfile() {
                 flex={1}
                 fontSize={"md"}
                 rounded={"full"}
-                bg={"blue.400"}
+                bg={"#48BB78"}
                 color={"white"}
                 boxShadow={
                   "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
                 }
                 _hover={{
-                  bg: "blue.500",
+                  bg: "#48BB78",
                 }}
                 _focus={{
-                  bg: "blue.500",
+                  bg: "#48BB78",
                 }}
               >
                 Logout
@@ -208,9 +207,12 @@ function UserProfile() {
                 color={"white"}
                 fontSize={"sm"}
                 rounded={"full"}
-                bg={"green.300"}
+                bg={"#ED8936"}
+                _hover={{
+                  bg: "#ED8936",
+                }}
                 _focus={{
-                  bg: "green.300",
+                  bg: "#ED8936",
                 }}
               >
                 Edit Profile
@@ -279,10 +281,10 @@ function UserProfile() {
                   "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
                 }
                 _hover={{
-                  bg: "blue.500",
+                  bg: "red.500",
                 }}
                 _focus={{
-                  bg: "blue.500",
+                  bg: "red.500",
                 }}
               >
                 Delete Account
