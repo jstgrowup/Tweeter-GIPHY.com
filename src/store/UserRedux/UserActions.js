@@ -1,5 +1,6 @@
 import { UserLoginsuccess, UserTokenSuccess } from "./UserActionsTypes";
 import axios from "axios";
+import { useSelector } from "react-redux";
 export const userLogin = (payload) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:8080/user/login", payload);
@@ -7,7 +8,7 @@ export const userLogin = (payload) => async (dispatch) => {
     const {
       data: { token },
     } = res;
-    localStorage.setItem("lol", token);
+    // localStorage.setItem("lol", token);
     dispatch({
       type: UserTokenSuccess,
       payload: token,
@@ -17,12 +18,11 @@ export const userLogin = (payload) => async (dispatch) => {
     return error.message;
   }
 };
-export const getTheUser = () => async (dispatch) => {
-  const huru = localStorage.getItem("lol");
+export const getTheUser = (token) => async (dispatch) => {
   try {
-    if (huru) {
+    if (token) {
       const res = await axios.post("http://localhost:8080/user/getuser", {
-        token: huru,
+        token: token,
       });
       const { data } = res;
 

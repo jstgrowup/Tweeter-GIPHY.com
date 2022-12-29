@@ -17,10 +17,9 @@ import {
 } from "@chakra-ui/react";
 import { FaUserAlt } from "react-icons/fa";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { BsSun, BsMoonStarsFill } from "react-icons/bs";
 function Navbar() {
-  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -28,11 +27,10 @@ function Navbar() {
       <Flex
         justify={"space-between"}
         w={"100%"}
-        
         h={["80px", "80px", "100px", "100px"]}
         bg={useColorModeValue("#166FE6", "#166FE6")}
       >
-        <Flex height={"100%"} w={["17%", "15%", "13%", "10%", "7%"]}>
+        <Flex height={"100%"} w={["17%", "15%", "13%", "7%", "5%"]}>
           <Image src="https://notion-emojis.s3-us-west-2.amazonaws.com/prod/svg-twitter/1f426.svg" />
         </Flex>
         <HStack

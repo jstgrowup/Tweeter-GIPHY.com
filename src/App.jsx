@@ -8,6 +8,7 @@ import TimeLine from "./routes/TimeLine";
 import Footer from "./Components/Footer";
 
 import { Box, useColorModeValue } from "@chakra-ui/react";
+
 function App() {
   return (
     <Box bg={useColorModeValue("#CCDEFF", "#171923")}>

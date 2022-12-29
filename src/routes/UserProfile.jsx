@@ -28,8 +28,8 @@ import axios from "axios";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { getTheUser } from "../store/UserRedux/UserActions";
-const getData = async () => {
-  const token = localStorage.getItem("lol");
+const getData = async (token) => {
+  // const token = localStorage.getItem("lol");
   try {
     const res = await axios.post("http://localhost:8080/posts/getUsersPosts", {
       token: token,
@@ -42,7 +42,7 @@ const getData = async () => {
   }
 };
 function UserProfile() {
-  const { data } = useSelector((store) => store.user);
+  const { data, token } = useSelector((store) => store.user);
 
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -95,10 +95,10 @@ function UserProfile() {
     }
   };
   useEffect(() => {
-    getData()
+    getData(token)
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
-    dispatch(getTheUser());
+    dispatch(getTheUser(token));
   }, []);
   const handleSubmit = (id) => {
     postUser(id);

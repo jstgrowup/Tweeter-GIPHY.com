@@ -42,8 +42,7 @@ const getData = async () => {
 };
 function TimeLine() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data } = useSelector((store) => store.user);
-
+  const { data, token } = useSelector((store) => store.user);
 
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
@@ -85,7 +84,7 @@ function TimeLine() {
     getData()
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
-    dispatch(getTheUser());
+    dispatch(getTheUser(token));
   }, [bool]);
   const handleSubmit = async () => {
     const respo = {
@@ -106,13 +105,11 @@ function TimeLine() {
       return;
     }
     try {
-      const res = await axios.post(
+       await axios.post(
         "http://localhost:8080/posts/createPost",
         respo
       );
-
       setbool(!bool);
-
       seturl(null);
       toast({
         title: "Post successfull",
@@ -132,12 +129,9 @@ function TimeLine() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.post(
-        `http://localhost:8080/posts/delete`,
-        {
-          id: id,
-        }
-      );
+      await axios.post(`http://localhost:8080/posts/delete`, {
+        id: id,
+      });
       toast({
         title: "Post deleted successfully",
         status: "success",
@@ -156,13 +150,10 @@ function TimeLine() {
   };
   const handleLikesAndDislikes = async (id, type) => {
     try {
-      await axios.post(
-        "http://localhost:8080/posts/likesAndDislikes",
-        {
-          id: id,
-          type: type,
-        }
-      );
+      await axios.post("http://localhost:8080/posts/likesAndDislikes", {
+        id: id,
+        type: type,
+      });
       setbool(!bool);
     } catch (error) {
       toast({
