@@ -1,6 +1,10 @@
-import { UserLoginsuccess, UserTokenSuccess } from "./UserActionsTypes";
+import {
+  UserLoginsuccess,
+  UserLogout,
+  UserTokenSuccess,
+} from "./UserActionsTypes";
 import axios from "axios";
-import { useSelector } from "react-redux";
+
 export const userLogin = (payload) => async (dispatch) => {
   try {
     const res = await axios.post("http://localhost:8080/user/login", payload);
@@ -35,4 +39,10 @@ export const getTheUser = (token) => async (dispatch) => {
   } catch (error) {
     console.log(error.message);
   }
+};
+export const logoutUser = () => (dispatch) => {
+  return dispatch({
+    type: UserLogout,
+    payload: null,
+  });
 };

@@ -8,8 +8,11 @@ import TimeLine from "./routes/TimeLine";
 import Footer from "./Components/Footer";
 
 import { Box, useColorModeValue } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
 
 function App() {
+  const prop = useSelector((store) => store.user);
+  console.log('prop:', prop)
   return (
     <Box bg={useColorModeValue("#CCDEFF", "#171923")}>
       <Navbar />

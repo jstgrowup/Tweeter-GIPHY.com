@@ -61,7 +61,7 @@ function Signup() {
       });
     }
     try {
-      const res = await axios.post(
+       await axios.post(
         "http://localhost:8080/user/postUser",
 
         formData

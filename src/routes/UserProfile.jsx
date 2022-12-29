@@ -27,9 +27,9 @@ import {
 import axios from "axios";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
-import { getTheUser } from "../store/UserRedux/UserActions";
+import { getTheUser, logoutUser } from "../store/UserRedux/UserActions";
+import DeleteButton from "../Components/DeleteButton";
 const getData = async (token) => {
-  // const token = localStorage.getItem("lol");
   try {
     const res = await axios.post("http://localhost:8080/posts/getUsersPosts", {
       token: token,
@@ -43,7 +43,7 @@ const getData = async (token) => {
 };
 function UserProfile() {
   const { data, token } = useSelector((store) => store.user);
-
+  const [bool, setbool] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [wholeData, setwholeData] = useState([]);
@@ -83,7 +83,7 @@ function UserProfile() {
         duration: 2000,
         isClosable: true,
       });
-      dispatch(getTheUser());
+      dispatch(getTheUser(token));
     } catch (e) {
       onClose();
       toast({
@@ -98,8 +98,28 @@ function UserProfile() {
     getData(token)
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
-    dispatch(getTheUser(token));
-  }, []);
+  }, [bool]);
+  const handlePostsDelete = async (id) => {
+    try {
+      await axios.post(`http://localhost:8080/posts/delete`, {
+        id: id,
+      });
+      toast({
+        title: "Post deleted successfully",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      setbool(!bool);
+    } catch (error) {
+      toast({
+        title: `${error.message}`,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
   const handleSubmit = (id) => {
     postUser(id);
   };
@@ -112,20 +132,26 @@ function UserProfile() {
         duration: 2000,
         isClosable: true,
       });
-      localStorage.removeItem("lol");
+      dispatch(logoutUser());
       navigate("/signin");
+      toast({
+        title: "Account deleted successfully",
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+      });
     } catch (error) {
       alert(error.message);
     }
   };
   const handleLogout = () => {
     navigate("/signin");
-    localStorage.removeItem("lol");
+    dispatch(logoutUser());
 
     toast({
       title: "Logout successfull",
       status: "success",
-      duration: 2000,
+      duration: 1000,
       isClosable: true,
     });
   };
@@ -325,14 +351,11 @@ function UserProfile() {
                     </Flex>
                   </Flex>
                   {el.userName === data.username && (
-                    <Button
-                      onClick={() => handleDelete(el._id)}
-                      bg={"red.400"}
-                      color={"white"}
-                      borderRadius={"3xl"}
-                    >
-                      DELETE
-                    </Button>
+                    <DeleteButton
+                      handleDelete={handlePostsDelete}
+                      _id={el._id}
+                    />
+                 
                   )}
                 </Flex>
                 <Text>{el.title}</Text>

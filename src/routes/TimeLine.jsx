@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { getTheUser } from "../store/UserRedux/UserActions";
+import DeleteButton from "../Components/DeleteButton";
 const getData = async () => {
   try {
     const res = await axios.get(
@@ -42,7 +43,7 @@ const getData = async () => {
 };
 function TimeLine() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data, token } = useSelector((store) => store.user);
+  const { data } = useSelector((store) => store.user);
 
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
@@ -79,12 +80,11 @@ function TimeLine() {
     seturl(url);
     onClose();
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     getData()
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
-    dispatch(getTheUser(token));
   }, [bool]);
   const handleSubmit = async () => {
     const respo = {
@@ -105,14 +105,11 @@ function TimeLine() {
       return;
     }
     try {
-       await axios.post(
-        "http://localhost:8080/posts/createPost",
-        respo
-      );
+      await axios.post("http://localhost:8080/posts/createPost", respo);
       setbool(!bool);
       seturl(null);
       toast({
-        title: "Post successfull",
+        title: "Posted successfull",
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -273,14 +270,7 @@ function TimeLine() {
                     </Flex>
                   </Flex>
                   {el.userId === data._id && (
-                    <Button
-                      onClick={() => handleDelete(el._id)}
-                      bg={"red.400"}
-                      color={"white"}
-                      borderRadius={"3xl"}
-                    >
-                      DELETE
-                    </Button>
+                    <DeleteButton handleDelete={handleDelete} _id={el._id} />
                   )}
                 </Flex>
                 <Text>{el.title}</Text>

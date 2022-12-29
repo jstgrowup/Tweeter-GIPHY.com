@@ -1,6 +1,6 @@
 import {
-  UserLoginFailure,
   UserLoginsuccess,
+  UserLogout,
   UserTokenSuccess,
 } from "./UserActionsTypes";
 
@@ -29,10 +29,11 @@ export const userReducer = (state = userState, { type, payload }) => {
       };
     }
 
-    case UserLoginFailure: {
+    case UserLogout: {
       return {
         ...state,
-        data: null,
+        token: payload,
+
         loading: false,
         error: true,
       };
