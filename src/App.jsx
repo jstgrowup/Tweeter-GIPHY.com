@@ -9,10 +9,11 @@ import Footer from "./Components/Footer";
 
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import Email from "./routes/Email";
 
 function App() {
   const prop = useSelector((store) => store.user);
-  console.log('prop:', prop)
+
   return (
     <Box bg={useColorModeValue("#CCDEFF", "#171923")}>
       <Navbar />
@@ -35,6 +36,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/users/:id/verify/:token" element={<Email />} />
       </Routes>
       <Footer />
     </Box>

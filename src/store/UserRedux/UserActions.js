@@ -5,14 +5,8 @@ import {
 } from "./UserActionsTypes";
 import axios from "axios";
 
-export const userLogin = (payload) => async (dispatch) => {
+export const userLogin = (token) => async (dispatch) => {
   try {
-    const res = await axios.post("http://localhost:8080/user/login", payload);
-
-    const {
-      data: { token },
-    } = res;
-    // localStorage.setItem("lol", token);
     dispatch({
       type: UserTokenSuccess,
       payload: token,

@@ -61,22 +61,24 @@ function Signup() {
       });
     }
     try {
-       await axios.post(
+      const res = await axios.post(
         "http://localhost:8080/user/postUser",
 
         formData
       );
+      console.log("res:", res);
+
       toast({
-        title: "Signup successfull",
+        title: `${res.data.message}`,
         status: "success",
         duration: 2000,
         isClosable: true,
       });
 
-      navigate("/signin");
+      // navigate("/signin");
     } catch (e) {
       toast({
-        title: `${e.response.data}`,
+        title: `${e.response.data.message}`,
         status: "warning",
         duration: 2000,
         isClosable: true,

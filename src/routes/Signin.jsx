@@ -16,6 +16,7 @@ import {
 import { useDispatch } from "react-redux";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { userLogin } from "../store/UserRedux/UserActions";
+import axios from "axios";
 function Signin() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -24,7 +25,6 @@ function Signin() {
   const dispatch = useDispatch();
 
   const [formData, setformData] = useState({
-    username: "",
     email: "",
     password: "",
   });
@@ -46,8 +46,8 @@ function Signin() {
     });
   };
   const postUser = async () => {
-    const { email, username, password } = formData;
-    if (!email || !username || !password) {
+    const { email, password } = formData;
+    if (!email || !password) {
       toast({
         title: "All fields are required",
         status: "warning",
@@ -56,19 +56,26 @@ function Signin() {
       });
     }
     try {
-      dispatch(userLogin(formData));
+      const res = await axios.post(
+        "http://localhost:8080/user/login",
+        formData
+      );
+
+      const {
+        data: { token, message },
+      } = res;
       toast({
-        title: "Login success",
+        title: message,
         status: "success",
         duration: 2000,
         isClosable: true,
       });
-
+      dispatch(userLogin(token));
       notify();
     } catch (e) {
       toast({
-        title: `${e.response.data}`,
-        status: "error",
+        title: `${e.response.data.message}`,
+        status: "warning",
         duration: 2000,
         isClosable: true,
       });
@@ -96,16 +103,6 @@ function Signin() {
             gap={"3"}
           >
             <Heading>Sign In</Heading>
-            <Text fontSize={"sm"} align={"start"}>
-              User Name{" "}
-            </Text>
-            <Input
-              borderColor={"black"}
-              type={"text"}
-              name={"username"}
-              onChange={handleChange}
-              placeholder="Enter your User Name"
-            ></Input>
 
             <Text fontSize={"sm"} align={"start"}>
               EMAIL ID{" "}

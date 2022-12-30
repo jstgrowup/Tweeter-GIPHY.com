@@ -43,6 +43,7 @@ const getData = async (token) => {
 };
 function UserProfile() {
   const { data, token } = useSelector((store) => store.user);
+
   const [bool, setbool] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -98,6 +99,7 @@ function UserProfile() {
     getData(token)
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
+      dispatch(getTheUser(token));
   }, [bool]);
   const handlePostsDelete = async (id) => {
     try {

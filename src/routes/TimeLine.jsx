@@ -26,7 +26,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@chakra-ui/react";
 import { BiDislike, BiLike } from "react-icons/bi";
-import { getTheUser } from "../store/UserRedux/UserActions";
+
 import DeleteButton from "../Components/DeleteButton";
 const getData = async () => {
   try {
