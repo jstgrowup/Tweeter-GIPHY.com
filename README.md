@@ -40,7 +40,7 @@ This is Social media website where users can create an account , signin and than
 - ## User Profile Page
   This is a user profile page where the user can see his own profile where the user can update his profile as well as delete his profile , Logout and see all the posts he has posted till that date.
 - ## TimeLine Page
-  This is a time line page where the user can see all the posts that other users had posted the user can post a caption along with a gif , by clicking on the gif button a modal will be shown where he can search a paticular type of GIF and then post it , the user can like other people posts and dislike them as well and everything will be updated in the backend in the real time 
+  This is a time line page where the user can see all the posts that other users had posted the user can post a caption along with a gif , by clicking on the gif button a modal will be shown where he can search a paticular type of GIF and then post it , the user can like other people posts and dislike them as well and everything will be updated in the backend in the real time
 
 # Tech Stacks for frontend
 
@@ -55,7 +55,11 @@ This is Social media website where users can create an account , signin and than
 - ExpressJS
 - NodeJS
 
+# Backend Repository
+
+- https://github.com/jstgrowup/Tweeter_Backend
+
 # Video Explaination
 
-- https://youtu.be/QeXO7GUo6LA
+- https://youtu.be/QeXO7GUo6LA (Version 1.O)
   ​
