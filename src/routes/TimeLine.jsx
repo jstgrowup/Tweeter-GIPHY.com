@@ -28,11 +28,12 @@ import { useToast } from "@chakra-ui/react";
 import { BiDislike, BiLike } from "react-icons/bi";
 
 import DeleteButton from "../Components/DeleteButton";
+import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
     const res = await axios.get(
       "http://localhost:8080/posts"
-      // "http://localhost:8080/posts"
+   
     );
     const { data } = res;
 
@@ -43,12 +44,11 @@ const getData = async () => {
 };
 function TimeLine() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data } = useSelector((store) => store.user);
-
+  const { data, token } = useSelector((store) => store.user);
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
   const [wholeData, setwholeData] = useState([]);
-
+  const dispatch = useDispatch();
   const [bool, setbool] = useState(false);
   const [text, settext] = useState("");
   const [url, seturl] = useState("");
@@ -85,6 +85,7 @@ function TimeLine() {
     getData()
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
+    dispatch(getTheUser(token));
   }, [bool]);
   const handleSubmit = async () => {
     const respo = {
@@ -117,7 +118,6 @@ function TimeLine() {
     } catch (error) {
       toast({
         title: `${error.message}`,
-
         status: "error",
         duration: 2000,
         isClosable: true,

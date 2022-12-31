@@ -1,4 +1,4 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Button, Center, Flex, Heading, Image } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -24,16 +24,19 @@ function Email() {
   return (
     <>
       {valid ? (
-        <Box>
-          <Heading>Verifed</Heading>
-          <Link to={"/signin"}>
-            <Button> Login </Button>
-          </Link>
-        </Box>
+        <Center>
+          <Flex direction={"column"} gap={"4"} align={"center"}>
+            <Image src="https://user-images.githubusercontent.com/40628582/210125289-4cb3584c-181d-48d6-abbb-f837ac0ad1a5.png" />
+            <Link to={"/signin"}>
+              <Button colorScheme={"whatsapp"} size={"lg"}>
+                Proceed to Login{" "}
+              </Button>
+            </Link>
+          </Flex>
+        </Center>
       ) : (
         <Box>
-          <Heading>{id}</Heading>
-          <Heading>{token}</Heading>
+          <Heading>Invalid Link</Heading>
         </Box>
       )}
     </>

@@ -8,7 +8,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-  Spinner,
+
   Text,
   useColorModeValue,
   useToast,
@@ -61,12 +61,12 @@ function Signup() {
       });
     }
     try {
+      setloading(true);
       const res = await axios.post(
         "http://localhost:8080/user/postUser",
 
         formData
       );
-      console.log("res:", res);
 
       toast({
         title: `${res.data.message}`,
@@ -74,31 +74,23 @@ function Signup() {
         duration: 2000,
         isClosable: true,
       });
-
+      setloading(false);
       // navigate("/signin");
     } catch (e) {
+      setloading(true);
       toast({
         title: `${e.response.data.message}`,
         status: "warning",
         duration: 2000,
         isClosable: true,
       });
+      setloading(false);
     }
   };
   const handleSubmit = () => {
     postUser();
   };
-  if (loading) {
-    return (
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
-        size="xl"
-      />
-    );
-  }
+
   return (
     <Center p={["3", "3", "6", "10"]}>
       <Box
@@ -161,6 +153,8 @@ function Signup() {
           </InputGroup>
 
           <Button
+            isLoading={loading}
+            loadingText={"Submitting"}
             onClick={handleSubmit}
             color={"white"}
             size={"lg"}

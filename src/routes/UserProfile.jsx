@@ -29,6 +29,7 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { getTheUser, logoutUser } from "../store/UserRedux/UserActions";
 import DeleteButton from "../Components/DeleteButton";
+import { Logoutfunction } from "../utils/Logout";
 const getData = async (token) => {
   try {
     const res = await axios.post("http://localhost:8080/posts/getUsersPosts", {
@@ -99,7 +100,7 @@ function UserProfile() {
     getData(token)
       .then((res) => setwholeData(res))
       .catch((er) => console.log(er));
-      dispatch(getTheUser(token));
+    dispatch(getTheUser(token));
   }, [bool]);
   const handlePostsDelete = async (id) => {
     try {
@@ -147,15 +148,7 @@ function UserProfile() {
     }
   };
   const handleLogout = () => {
-    navigate("/signin");
-    dispatch(logoutUser());
-
-    toast({
-      title: "Logout successfull",
-      status: "success",
-      duration: 1000,
-      isClosable: true,
-    });
+    return Logoutfunction(navigate, dispatch, logoutUser, toast);
   };
   return (
     <>
@@ -357,7 +350,6 @@ function UserProfile() {
                       handleDelete={handlePostsDelete}
                       _id={el._id}
                     />
-                 
                   )}
                 </Flex>
                 <Text>{el.title}</Text>

@@ -12,18 +12,18 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-
 import { useDispatch } from "react-redux";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { userLogin } from "../store/UserRedux/UserActions";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 function Signin() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-
+  const [loading, setloading] = useState(false);
   const toast = useToast();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [formData, setformData] = useState({
     email: "",
     password: "",
@@ -56,6 +56,7 @@ function Signin() {
       });
     }
     try {
+      setloading(true);
       const res = await axios.post(
         "http://localhost:8080/user/login",
         formData
@@ -72,13 +73,17 @@ function Signin() {
       });
       dispatch(userLogin(token));
       notify();
+      setloading(false);
+      navigate("/");
     } catch (e) {
+      setloading(true);
       toast({
         title: `${e.response.data.message}`,
         status: "warning",
-        duration: 2000,
+        duration: 3000,
         isClosable: true,
       });
+      setloading(false);
     }
   };
 
@@ -128,8 +133,15 @@ function Signin() {
                 {show ? <ViewIcon boxSize={5} /> : <ViewOffIcon boxSize={5} />}
               </InputRightElement>
             </InputGroup>
-
+            <Link to={"/signup"}>
+              <Text>
+                Dont Have an account?{" "}
+                <span style={{ color: "red" }}>Create an Account</span>{" "}
+              </Text>
+            </Link>
             <Button
+              isLoading={loading}
+              loadingText={"Submitting"}
               onClick={handleSubmit}
               _hover={{ bg: "#24AEB1" }}
               color={"white"}
