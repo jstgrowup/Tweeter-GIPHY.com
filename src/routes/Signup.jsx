@@ -34,20 +34,7 @@ function Signup() {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
-  const notify = () => {
-    return toast({
-      title: "Welcome! to tweeter",
-      description: "If you already have an account please Login",
-      position: "top-left",
-      status: "loading",
-      variant: "left-accent",
-      isClosable: true,
-      duration: 2000,
-    });
-  };
-  useEffect(() => {
-    notify();
-  }, []);
+ 
 
   const postUser = async () => {
     const { email, fullname, password } = formData;
@@ -63,7 +50,7 @@ function Signup() {
     try {
       setloading(true);
       const res = await axios.post(
-        "http://localhost:8080/user/postUser",
+        "https://smoggy-worm-hospital-gown.cyclic.app/user/postUser",
 
         formData
       );

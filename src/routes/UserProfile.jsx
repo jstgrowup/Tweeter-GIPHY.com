@@ -32,13 +32,13 @@ import DeleteButton from "../Components/DeleteButton";
 import { Logoutfunction } from "../utils/Logout";
 const getData = async (token) => {
   try {
-    const res = await axios.post("http://localhost:8080/posts/getUsersPosts", {
+    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/posts/getUsersPosts", {
       token: token,
     });
     const { data } = res;
     return data;
   } catch (error) {
-    console.log("error:", error);
+    
     return error.message;
   }
 };
@@ -72,7 +72,7 @@ function UserProfile() {
     }
 
     try {
-      await axios.patch(`http://localhost:8080/user/updateUser/${id}`, {
+      await axios.patch(`https://smoggy-worm-hospital-gown.cyclic.app/user/updateUser/${id}`, {
         fullname: fullname,
         email: email,
         password: password,
@@ -104,7 +104,7 @@ function UserProfile() {
   }, [bool]);
   const handlePostsDelete = async (id) => {
     try {
-      await axios.post(`http://localhost:8080/posts/delete`, {
+      await axios.post(`https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`, {
         id: id,
       });
       toast({
@@ -128,7 +128,7 @@ function UserProfile() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.post("http://localhost:8080/user/delete", { id: id });
+      await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/user/delete", { id: id });
       toast({
         title: "Deleted successfully",
         status: "success",

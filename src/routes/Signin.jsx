@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -45,6 +45,20 @@ function Signin() {
       duration: 2000,
     });
   };
+  const welcome = () => {
+    return toast({
+      title: "Welcome! to tweeter",
+      description: "If you already have an account please Login",
+      position: "top-left",
+      status: "loading",
+      variant: "left-accent",
+      isClosable: true,
+      duration: 2000,
+    });
+  };
+  useEffect(() => {
+    welcome();
+  }, []);
   const postUser = async () => {
     const { email, password } = formData;
     if (!email || !password) {
@@ -58,7 +72,7 @@ function Signin() {
     try {
       setloading(true);
       const res = await axios.post(
-        "http://localhost:8080/user/login",
+        "https://smoggy-worm-hospital-gown.cyclic.app/user/login",
         formData
       );
 

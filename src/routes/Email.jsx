@@ -8,12 +8,12 @@ function Email() {
   const { id, token } = useParams();
   const verify = async () => {
     try {
-      const url = `http://localhost:8080/user/${id}/verify/${token}`;
+      const url = `https://smoggy-worm-hospital-gown.cyclic.app/user/${id}/verify/${token}`;
       const { data } = await axios.get(url);
-      console.log(data);
+
       setvalid(true);
     } catch (error) {
-      console.log("error:", error);
+      
       setvalid(false);
     }
   };
