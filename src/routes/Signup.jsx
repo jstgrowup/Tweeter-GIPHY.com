@@ -48,7 +48,7 @@ function Signup() {
     try {
       setloading(true);
       const res = await axios.post(
-        "https://smoggy-worm-hospital-gown.cyclic.app/user/postUser",
+        "http://localhost:8080/user/postUser",
 
         formData
       );

@@ -19,13 +19,13 @@ export const userLogin = (token) => async (dispatch) => {
 export const getTheUser = (token) => async (dispatch) => {
   try {
     if (token) {
-      const res = await axios.post(
-        "https://smoggy-worm-hospital-gown.cyclic.app/user/getuser",
-        {
-          token: token,
-        }
-      );
-      const { data } = res;
+      const res = await axios.post("http://localhost:8080/user/getuser", {
+        token: token,
+      });
+      
+      const {
+        data: { data },
+      } = res;
 
       dispatch({
         type: UserLoginsuccess,

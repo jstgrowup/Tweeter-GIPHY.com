@@ -31,9 +31,7 @@ import DeleteButton from "../Components/DeleteButton";
 import { getTheUser } from "../store/UserRedux/UserActions";
 const getData = async () => {
   try {
-    const res = await axios.get(
-      "https://smoggy-worm-hospital-gown.cyclic.app/posts"
-    );
+    const res = await axios.get("http://localhost:8080/posts");
     const { data } = res;
 
     return data;
@@ -105,10 +103,7 @@ function TimeLine() {
       return;
     }
     try {
-      await axios.post(
-        "https://smoggy-worm-hospital-gown.cyclic.app/posts/createPost",
-        respo
-      );
+      await axios.post("http://localhost:8080/posts/createPost", respo);
       setbool(!bool);
       seturl(null);
       toast({
@@ -128,12 +123,9 @@ function TimeLine() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.post(
-        `https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`,
-        {
-          id: id,
-        }
-      );
+      await axios.post(`http://localhost:8080/posts/delete`, {
+        id: id,
+      });
       toast({
         title: "Post deleted successfully",
         status: "success",
@@ -152,13 +144,10 @@ function TimeLine() {
   };
   const handleLikesAndDislikes = async (id, type) => {
     try {
-      await axios.post(
-        "https://smoggy-worm-hospital-gown.cyclic.app/posts/likesAndDislikes",
-        {
-          id: id,
-          type: type,
-        }
-      );
+      await axios.post("http://localhost:8080/posts/likesAndDislikes", {
+        id: id,
+        type: type,
+      });
       setbool(!bool);
     } catch (error) {
       toast({
