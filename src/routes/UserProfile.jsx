@@ -32,13 +32,15 @@ import DeleteButton from "../Components/DeleteButton";
 import { Logoutfunction } from "../utils/Logout";
 const getData = async (token) => {
   try {
-    const res = await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/posts/getUsersPosts", {
-      token: token,
-    });
+    const res = await axios.post(
+      "https://smoggy-worm-hospital-gown.cyclic.app/posts/getUsersPosts",
+      {
+        token: token,
+      }
+    );
     const { data } = res;
     return data;
   } catch (error) {
-    
     return error.message;
   }
 };
@@ -72,11 +74,14 @@ function UserProfile() {
     }
 
     try {
-      await axios.patch(`https://smoggy-worm-hospital-gown.cyclic.app/user/updateUser/${id}`, {
-        fullname: fullname,
-        email: email,
-        password: password,
-      });
+      await axios.patch(
+        `https://smoggy-worm-hospital-gown.cyclic.app/user/updateUser/${id}`,
+        {
+          fullname: fullname,
+          email: email,
+          password: password,
+        }
+      );
 
       onClose();
       toast({
@@ -104,9 +109,12 @@ function UserProfile() {
   }, [bool]);
   const handlePostsDelete = async (id) => {
     try {
-      await axios.post(`https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`, {
-        id: id,
-      });
+      await axios.post(
+        `https://smoggy-worm-hospital-gown.cyclic.app/posts/delete`,
+        {
+          id: id,
+        }
+      );
       toast({
         title: "Post deleted successfully",
         status: "success",
@@ -128,7 +136,10 @@ function UserProfile() {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.post("https://smoggy-worm-hospital-gown.cyclic.app/user/delete", { id: id });
+      await axios.post(
+        "https://smoggy-worm-hospital-gown.cyclic.app/user/delete",
+        { id: id }
+      );
       toast({
         title: "Deleted successfully",
         status: "success",

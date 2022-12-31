@@ -8,7 +8,6 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-
   Text,
   useColorModeValue,
   useToast,
@@ -34,7 +33,6 @@ function Signup() {
     const { name, value } = e.target;
     setformData({ ...formData, [name]: value });
   };
- 
 
   const postUser = async () => {
     const { email, fullname, password } = formData;

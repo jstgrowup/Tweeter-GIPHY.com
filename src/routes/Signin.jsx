@@ -121,10 +121,10 @@ function Signin() {
             p={["8", "5", "6", "8"]}
             gap={"3"}
           >
-            <Heading>Sign In</Heading>
+            <Heading>Log In</Heading>
 
             <Text fontSize={"sm"} align={"start"}>
-              EMAIL ID{" "}
+              Email Id{" "}
             </Text>
             <Input
               borderColor={"black"}
@@ -163,7 +163,7 @@ function Signin() {
               width={"100%"}
               bg={"#24AEB1"}
             >
-              Sign In
+              Log In
             </Button>
           </Flex>
         </Box>

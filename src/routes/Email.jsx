@@ -13,7 +13,6 @@ function Email() {
 
       setvalid(true);
     } catch (error) {
-      
       setvalid(false);
     }
   };
