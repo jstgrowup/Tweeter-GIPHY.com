@@ -22,25 +22,20 @@ function Email() {
 
     try {
       setloading(true);
-      const res = await axios.post(
-        `/api/token/find`,
-        payload
-      );
+      const res = await axios.post(`/api/token/find`, payload);
       if (res.status === 200) {
- 
         toast({
           title: `${res.data.message}`,
-          description: "Please check your email",
+          description: "Please check the spam section in your Email",
           position: "top-left",
           status: "loading",
           variant: "left-accent",
           isClosable: true,
-          duration: 2000,
+          duration: 3000,
         });
       }
       setloading(false);
     } catch (error) {
-
       setloading(true);
 
       toast({
@@ -98,7 +93,6 @@ function Email() {
           </Flex>
         </Box>
       </Center>
-    
     </>
   );
 }

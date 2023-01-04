@@ -23,7 +23,7 @@ app.post(async (req, res) => {
     }
     const url = `https://tweeter-giphy-com.vercel.app/verified/${data.email}`;
     await verifyemail(data.email, "Tweeter-GIPHY.com", url);
-    res.status(200).send({ message: "Email Sent successfully" });
+    res.status(200).send({ message: "Email Sent successfully " });
   } catch (error) {
     res
       .status(401)
