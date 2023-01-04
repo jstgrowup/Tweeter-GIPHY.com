@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import "./Timeline.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -49,7 +49,8 @@ function TimeLine() {
   const [bool, setbool] = useState(false);
   const [text, settext] = useState("");
   const [url, seturl] = useState("");
-
+  const inputRef = useRef();
+  const [files, setfiles] = useState("");
   const handleChange = async (e) => {
     let huru = e.target.value;
     try {
@@ -159,6 +160,9 @@ function TimeLine() {
       });
     }
   };
+  const handleFiles = (e) => {
+    setfiles(e.currentTarget.files[0]);
+  };
   return (
     <div>
       <Center>
@@ -229,6 +233,7 @@ function TimeLine() {
                 </ModalFooter>
               </ModalContent>
             </Modal>
+          
             <Button onClick={handleSubmit} colorScheme={"blue"} color={"white"}>
               POST
             </Button>
