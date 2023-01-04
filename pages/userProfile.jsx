@@ -45,6 +45,7 @@ const getData = async (token) => {
 };
 function UserProfile() {
   const { data, token } = useSelector((store) => store.user);
+   
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const [bool, setbool] = useState(false);
