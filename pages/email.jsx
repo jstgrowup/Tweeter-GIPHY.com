@@ -27,6 +27,7 @@ function Email() {
         payload
       );
       if (res.status === 200) {
+ 
         toast({
           title: `${res.data.message}`,
           description: "Please check your email",

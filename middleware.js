@@ -4,6 +4,8 @@ export default function middleware(req) {
 
   if (verify === undefined || !verify.value) {
     return NextResponse.redirect("https://tweeter-giphy-com.vercel.app/signin");
+    // return NextResponse.redirect("http://localhost:3000/signin");
+
   } else {
     return NextResponse.next();
   }
