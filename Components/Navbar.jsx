@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   HStack,
@@ -35,6 +35,7 @@ function Navbar() {
   const dispatch = useDispatch();
   const toast = useToast();
   const router = useRouter();
+  const [image, setimage] = useState("");
   const {
     data: { img, username },
     token,
@@ -50,6 +51,10 @@ function Navbar() {
       isClosable: true,
     });
   };
+  useEffect(() => {
+    setimage(img);
+  }, [img]);
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
   return (
@@ -97,7 +102,7 @@ function Navbar() {
                   color={"white"}
                   leftIcon={
                     token ? (
-                      <Image src={img} boxSize={"10"} borderRadius={"full"} />
+                      <Image src={image} boxSize={"10"} borderRadius={"full"} />
                     ) : (
                       <FaUserCircle
                         style={{ color: "white", fontSize: "1.7em" }}
