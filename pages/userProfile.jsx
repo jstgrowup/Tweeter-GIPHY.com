@@ -19,6 +19,8 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  InputRightElement,
+  InputGroup,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -27,14 +29,12 @@ import { BiDislike, BiLike } from "react-icons/bi";
 import { getTheUser, logoutUser } from "../store/UserRedux/UserActions";
 import { useRouter } from "next/router";
 import DeleteButton from "../Components/DeleteButton";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 const getData = async (token) => {
   try {
-    const res = await axios.post(
-      "/api/posts/getUsersPosts",
-      {
-        token: token,
-      }
-    );
+    const res = await axios.post("/api/posts/getUsersPosts", {
+      token: token,
+    });
     const { data } = res;
 
     return data;
@@ -45,7 +45,8 @@ const getData = async (token) => {
 };
 function UserProfile() {
   const { data, token } = useSelector((store) => store.user);
-
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
   const [bool, setbool] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -75,7 +76,7 @@ function UserProfile() {
         username: username,
         password: password,
       });
-      console.log('res:', res)
+      console.log("res:", res);
 
       onClose();
       toast({
@@ -86,7 +87,6 @@ function UserProfile() {
       });
       dispatch(getTheUser(token));
     } catch (e) {
-   
       onClose();
       toast({
         title: `${e.response.data.message}`,
@@ -261,12 +261,26 @@ function UserProfile() {
                       />
 
                       <Text fontSize={"sm"}>Password</Text>
-                      <Input
-                        type={"text"}
-                        name={"password"}
-                        onChange={handleChange}
-                        placeholder="Enter Your Password"
-                      />
+                      <InputGroup size="md">
+                        <Input
+                          pr="4.5rem"
+                          borderColor={"black"}
+                          type={show ? "text" : "password"}
+                          name={"password"}
+                          onChange={handleChange}
+                          placeholder="Enter Your Password"
+                        />
+                        <InputRightElement
+                          onClick={handleClick}
+                          cursor={"pointer"}
+                        >
+                          {show ? (
+                            <ViewIcon boxSize={5} />
+                          ) : (
+                            <ViewOffIcon boxSize={5} />
+                          )}
+                        </InputRightElement>
+                      </InputGroup>
 
                       <Button
                         onClick={() => handleSubmit(data._id)}

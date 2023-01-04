@@ -89,9 +89,7 @@ function Signin() {
       Cookies.set("loggedin", true);
       router.push("/");
     } catch (e) {
-   
-
-      setloading(true);
+     setloading(true);
       toast({
         title: `${e.response.data.message}`,
         status: "warning",

@@ -1,3 +1,4 @@
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import {
   Box,
   useColorModeValue,
@@ -7,13 +8,15 @@ import {
   Heading,
   Input,
   useToast,
+  InputRightElement,
+  InputGroup,
 } from "@chakra-ui/react";
 import axios from "axios";
-
 import Router, { useRouter } from "next/router";
 import React, { useState } from "react";
-
 function VerifyEmail() {
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
   const [loading, setloading] = useState(false);
   const params = useRouter();
   const { token } = params.query;
@@ -75,21 +78,35 @@ function VerifyEmail() {
             gap={"3"}
           >
             <Heading size={"md"}>Please enter your new Password</Heading>
-            <Input
-              borderColor={"black"}
-              type={"text"}
-              name={"email"}
-              onChange={(e) => setpassword(e.target.value)}
-              placeholder="Enter your Password"
-            />
+            <InputGroup size="md">
+              <Input
+                pr="4.5rem"
+                borderColor={"black"}
+                type={show ? "text" : "password"}
+                name={"password"}
+                onChange={(e) => setpassword(e.target.value)}
+                placeholder="Enter Your Password"
+              />
+              <InputRightElement onClick={handleClick} cursor={"pointer"}>
+                {show ? <ViewIcon boxSize={5} /> : <ViewOffIcon boxSize={5} />}
+              </InputRightElement>
+            </InputGroup>
+
             <Heading size={"md"}>Confirm Password</Heading>
-            <Input
-              borderColor={"black"}
-              type={"text"}
-              name={"email"}
-              onChange={(e) => setconfirmpassword(e.target.value)}
-              placeholder="Confirm Password"
-            />
+            <InputGroup size="md">
+              <Input
+                pr="4.5rem"
+                borderColor={"black"}
+                type={show ? "text" : "password"}
+                name={"password"}
+                onChange={(e) => setconfirmpassword(e.target.value)}
+                placeholder="Enter Your Password"
+              />
+              <InputRightElement onClick={handleClick} cursor={"pointer"}>
+                {show ? <ViewIcon boxSize={5} /> : <ViewOffIcon boxSize={5} />}
+              </InputRightElement>
+            </InputGroup>
+
             <Button
               isLoading={loading}
               loadingText={"Submitting"}
