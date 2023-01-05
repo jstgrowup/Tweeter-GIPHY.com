@@ -30,6 +30,7 @@ import { getTheUser, logoutUser } from "../store/UserRedux/UserActions";
 import { useRouter } from "next/router";
 import DeleteButton from "../Components/DeleteButton";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import Toast from "../Components/Toast";
 const getData = async (token) => {
   try {
     const res = await axios.post("/api/posts/getUsersPosts", {
@@ -45,7 +46,7 @@ const getData = async (token) => {
 };
 function UserProfile() {
   const { data, token } = useSelector((store) => store.user);
-   
+
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const [bool, setbool] = useState(false);

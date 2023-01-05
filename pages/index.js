@@ -28,6 +28,7 @@ import { useToast } from "@chakra-ui/react";
 import { BiDislike, BiLike } from "react-icons/bi";
 import DeleteButton from "../Components/DeleteButton";
 import { getTheUser } from "../store/UserRedux/UserActions";
+
 const getData = async () => {
   try {
     const res = await axios.get("/api/posts");
@@ -48,7 +49,7 @@ export default function Home() {
   const [bool, setbool] = useState(false);
   const [text, settext] = useState("");
   const [url, seturl] = useState("");
-  
+
   const handleChange = async (e) => {
     let huru = e.target.value;
     try {
@@ -153,7 +154,7 @@ export default function Home() {
         id: id,
         type: type,
       });
-  
+      setbool(!bool);
     } catch (error) {
       toast({
         title: `${error.message}`,
@@ -247,16 +248,16 @@ export default function Home() {
             </Flex>
           </Box>
         </Center>
-        <Center>
-          <Flex
-            mt={"4"}
-            w={["95%", "80%", "70%", "50%"]}
-            gap={"4"}
-            color={useColorModeValue("black", "black")}
-            direction={"column"}
-            align={"flex-start"}
-          >
-            <Skeleton isLoaded={loading} w="100%">
+        <Skeleton isLoaded={loading} w="100%">
+          <Center>
+            <Flex
+              mt={"4"}
+              w={["95%", "80%", "70%", "50%"]}
+              gap={"4"}
+              color={useColorModeValue("black", "black")}
+              direction={"column"}
+              align={"flex-start"}
+            >
               {wholeData?.map((el) => {
                 return (
                   <Flex
@@ -309,9 +310,9 @@ export default function Home() {
                   </Flex>
                 );
               })}
-            </Skeleton>
-          </Flex>
-        </Center>
+            </Flex>
+          </Center>
+        </Skeleton>
       </Box>
     </>
   );
