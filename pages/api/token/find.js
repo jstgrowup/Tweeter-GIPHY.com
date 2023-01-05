@@ -21,7 +21,7 @@ app.post(async (req, res) => {
     if (!data) {
       return res.status(401).send({ message: "No email exists" });
     }
-    const url = `https://tweeter-giphy-com.vercel.app/verified/${data.email}`;
+    const url = `https://tweeter-giphy.vercel.app/verified/${data.email}`;
     await verifyemail(data.email, "Tweeter-GIPHY.com", url);
     res.status(200).send({ message: "Email Sent successfully " });
   } catch (error) {
