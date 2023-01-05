@@ -41,15 +41,15 @@ function Navbar() {
     token,
   } = useSelector((store) => store.user);
   const handleLogout = () => {
-    router.push("/signin");
     dispatch(logoutUser());
-
+    
     toast({
       title: "Logout successfull",
       status: "success",
       duration: 1000,
       isClosable: true,
     });
+    router.push("/signin");
   };
  
 
