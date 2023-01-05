@@ -165,7 +165,7 @@ export default function Home() {
       });
     }
   };
-
+  console.log(wholeData.length);
   return (
     <>
       <Box bg={useColorModeValue("#CCDEFF", "black")}>
@@ -248,8 +248,14 @@ export default function Home() {
             </Flex>
           </Box>
         </Center>
-        <Skeleton isLoaded={loading} w="100%">
-          <Center>
+        <Center>
+          {wholeData.length === 0 ? (
+            <Image
+              src="https://i.stack.imgur.com/IA7jp.gif"
+              w={["95%", "80%", "70%", "50%"]}
+              borderRadius={"full"}
+            />
+          ) : (
             <Flex
               mt={"4"}
               w={["95%", "80%", "70%", "50%"]}
@@ -258,61 +264,66 @@ export default function Home() {
               direction={"column"}
               align={"flex-start"}
             >
-              {wholeData?.map((el) => {
+              {wholeData.map((el) => {
                 return (
-                  <Flex
-                    boxShadow={"2xl"}
-                    border={"2px"}
-                    borderColor={"white"}
-                    borderRadius={"2xl"}
-                    w={"100%"}
-                    key={el._id}
-                    bgColor={useColorModeValue("white", "black")}
-                    color={useColorModeValue("black", "white")}
-                    direction={"column"}
-                    align={"flex-start"}
-                  >
-                    <Flex w={"100%"} align={"center"} justify={"space-between"}>
-                      <Flex align={"center"} gap={"3"}>
-                        <Avatar size="md" src={data.img} />
-                        <Flex direction={"column"}>
-                          <Text fontSize={"lg"} fontWeight={"bold"}>
-                            {" "}
-                            {el.userName}
-                          </Text>
-                          <Text fontSize={"lg"}> {el.caption}</Text>
+                  <Skeleton isLoaded={loading} w="100%" key={el._id}>
+                    <Flex
+                      boxShadow={"2xl"}
+                      border={"2px"}
+                      borderColor={"white"}
+                      borderRadius={"2xl"}
+                      w={"100%"}
+                      bgColor={useColorModeValue("white", "black")}
+                      color={useColorModeValue("black", "white")}
+                      direction={"column"}
+                      align={"flex-start"}
+                    >
+                      <Flex
+                        w={"100%"}
+                        align={"center"}
+                        justify={"space-between"}
+                      >
+                        <Flex align={"center"} gap={"3"}>
+                          <Avatar size="md" src={data.img} />
+                          <Flex direction={"column"}>
+                            <Text fontSize={"lg"} fontWeight={"bold"}>
+                              {" "}
+                              {el.userName}
+                            </Text>
+                            <Text fontSize={"lg"}> {el.caption}</Text>
+                          </Flex>
                         </Flex>
+                        {el.userId === data._id && (
+                          <DeleteButton
+                            handleDelete={handleDelete}
+                            _id={el._id}
+                          />
+                        )}
                       </Flex>
-                      {el.userId === data._id && (
-                        <DeleteButton
-                          handleDelete={handleDelete}
-                          _id={el._id}
+                      <Text>{el.title}</Text>
+                      <Image w={"100%"} h={"300px"} src={el.url}></Image>
+                      <Flex ml={"2"} gap={"3"}>
+                        <BiLike
+                          className="huru"
+                          onClick={() => handleLikesAndDislikes(el._id, "like")}
                         />
-                      )}
-                    </Flex>
-                    <Text>{el.title}</Text>
-                    <Image w={"100%"} h={"300px"} src={el.url}></Image>
-                    <Flex ml={"2"} gap={"3"}>
-                      <BiLike
-                        className="huru"
-                        onClick={() => handleLikesAndDislikes(el._id, "like")}
-                      />
-                      <Text fontWeight={"bold"}>{el.likes}</Text>
-                      <BiDislike
-                        className="huru"
-                        onClick={() =>
-                          handleLikesAndDislikes(el._id, "dislikes")
-                        }
-                      />
+                        <Text fontWeight={"bold"}>{el.likes}</Text>
+                        <BiDislike
+                          className="huru"
+                          onClick={() =>
+                            handleLikesAndDislikes(el._id, "dislikes")
+                          }
+                        />
 
-                      <Text fontWeight={"bold"}>{el.dislikes}</Text>
+                        <Text fontWeight={"bold"}>{el.dislikes}</Text>
+                      </Flex>
                     </Flex>
-                  </Flex>
+                  </Skeleton>
                 );
               })}
             </Flex>
-          </Center>
-        </Skeleton>
+          )}
+        </Center>
       </Box>
     </>
   );
