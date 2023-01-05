@@ -202,11 +202,9 @@ function UserProfile() {
                 rounded={"full"}
                 color={"white"}
                 bg={"blackAlpha.500"}
-                _focus={{
-                  bg: "black.200",
-                }}
+                _hover={{ bg: "blackAlpha.500" }}
               >
-                Followers {"23"}
+                Followers {data.followers}
               </Button>
               <Button
                 onClick={handleLogout}

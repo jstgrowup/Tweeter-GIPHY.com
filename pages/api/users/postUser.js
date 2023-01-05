@@ -24,7 +24,7 @@ app.post(async (req, res) => {
     await userModel.create({
       ...req.body,
       password: hashPassword,
-    });
+      });
 
     res.send({ message: "User Created Successfully" });
   } catch (error) {

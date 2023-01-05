@@ -32,6 +32,7 @@ export const getTheUser = (token) => async (dispatch) => {
         username: data.username,
         email: data.username,
         img: data.img,
+        followers: data.followers,
       };
       dispatch({
         type: UserLoginsuccess,

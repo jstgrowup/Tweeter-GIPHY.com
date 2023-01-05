@@ -11,6 +11,7 @@ const PostsSchema = new mongoose.Schema(
     url: { type: String, required: true },
     likes: { type: Number, required: true, default: 0 },
     dislikes: { type: Number, required: true, default: 0 },
+    img: { type: String, required: true },
   },
   {
     versionKey: false,

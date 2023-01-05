@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     img: { type: String, required: true },
     verfied: { type: Boolean, default: false },
+    followers: { type: Number, default: 0 },
   },
   {
     versionKey: false,

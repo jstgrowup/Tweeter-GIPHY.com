@@ -4,13 +4,19 @@ import {
   Button,
   Center,
   Flex,
+  HStack,
   Image,
   Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Portal,
   Skeleton,
   Text,
   Textarea,
   useColorModeValue,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import {
@@ -28,6 +34,8 @@ import { useToast } from "@chakra-ui/react";
 import { BiDislike, BiLike } from "react-icons/bi";
 import DeleteButton from "../Components/DeleteButton";
 import { getTheUser } from "../store/UserRedux/UserActions";
+import Link from "next/link";
+import { FaUserCircle } from "react-icons/fa";
 
 const getData = async () => {
   try {
@@ -41,6 +49,7 @@ const getData = async () => {
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data, token } = useSelector((store) => store.user);
+
   const toast = useToast();
   const [searchdata, setdata] = useState([]);
   const [loading, setloading] = useState(false);
@@ -96,6 +105,7 @@ export default function Home() {
       userName: data.username,
       caption: text,
       url: url,
+      img: data.img,
     };
     if (!url || !text) {
       toast({
@@ -165,7 +175,17 @@ export default function Home() {
       });
     }
   };
-
+  const handleFollow = async (id) => {
+    try {
+      const res = await axios.post("/api/users/follow", {
+        findId: id,
+        follower: data._id,
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Box bg={useColorModeValue("#CCDEFF", "black")}>
@@ -283,16 +303,61 @@ export default function Home() {
                         align={"center"}
                         justify={"space-between"}
                       >
-                        <Flex align={"center"} gap={"3"}>
-                          <Avatar size="md" src={data.img} />
-                          <Flex direction={"column"}>
-                            <Text fontSize={"lg"} fontWeight={"bold"}>
-                              {" "}
-                              {el.userName}
-                            </Text>
-                            <Text fontSize={"lg"}> {el.caption}</Text>
+                        <Popover trigger="hover" placement={"right-start"}>
+                          <Flex align={"center"} gap={"3"} cursor={"pointer"}>
+                            <PopoverTrigger>
+                              <Avatar size="md" src={el.img} />
+                            </PopoverTrigger>
+                            <Flex direction={"column"}>
+                              <Text fontSize={"lg"} fontWeight={"bold"}>
+                                {" "}
+                                {el.userName}
+                              </Text>
+                              <Text fontSize={"lg"}> {el.caption}</Text>
+                            </Flex>
                           </Flex>
-                        </Flex>
+                          <Portal>
+                            <PopoverContent
+                              bg={"white"}
+                              color={"black"}
+                              borderRadius={"md"}
+                            >
+                              <HStack>
+                                {el.img ? (
+                                  <Image src={el.img} borderRadius={"md"} />
+                                ) : (
+                                  <Image
+                                    borderRadius={"full"}
+                                    w={"40%"}
+                                    h={"100%"}
+                                    src={
+                                      "https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png"
+                                    }
+                                  />
+                                )}
+                                <Flex
+                                  direction={"column"}
+                                  gap={"9"}
+                                  width={"100%"}
+                                  align={"center"}
+                                >
+                                  <Text fontSize={"lg"} fontWeight={"semibold"}>
+                                    {el.userName}
+                                  </Text>
+                                  <Button
+                                    w={"100%"}
+                                    color={"white"}
+                                    onClick={() => handleFollow(el.userId)}
+                                    variant={"none"}
+                                    bg={"black"}
+                                  >
+                                    Follow
+                                  </Button>
+                                </Flex>
+                              </HStack>
+                            </PopoverContent>
+                          </Portal>
+                        </Popover>
                         {el.userId === data._id && (
                           <DeleteButton
                             handleDelete={handleDelete}
