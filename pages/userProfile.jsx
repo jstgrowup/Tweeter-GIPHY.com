@@ -151,7 +151,6 @@ function UserProfile() {
   };
   const handleLogout = () => {
     dispatch(logoutUser());
-    router.push("/");
 
     toast({
       title: "Logout successfull",
@@ -159,6 +158,7 @@ function UserProfile() {
       duration: 1000,
       isClosable: true,
     });
+    router.push("/signin");
   };
   return (
     <Box bg={useColorModeValue("#CCDEFF", "#171923")}>

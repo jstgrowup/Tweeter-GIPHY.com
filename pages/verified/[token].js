@@ -50,7 +50,7 @@ function VerifyEmail() {
     } catch (error) {
       toast({
         title: `${error.response.data.message}`,
-        status: "success",
+        status: "warning",
         duration: 2000,
         isClosable: true,
       });
