@@ -3,8 +3,8 @@ export default function middleware(req) {
   let verify = req.cookies.get("loggedin");
 
   if (verify === undefined || !verify.value) {
-    return NextResponse.redirect("https://tweeter-giphy.vercel.app/signin");
-    // return NextResponse.redirect("http://localhost:3000/signin");
+    // return NextResponse.redirect("https://tweeter-giphy.vercel.app/signin");
+    return NextResponse.redirect("http://localhost:3000/signin");
 
   } else {
     return NextResponse.next();

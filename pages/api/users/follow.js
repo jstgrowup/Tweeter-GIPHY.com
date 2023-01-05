@@ -8,14 +8,14 @@ app.post(async (req, res) => {
   const { findId } = req.body;
   const data = await userModel.findById(findId);
   try {
-    const respo = await userModel.findByIdAndUpdate(
+    await userModel.findByIdAndUpdate(
       { _id: findId },
       {
         $set: { followers: data.followers + 1 },
       }
     );
 
-    res.send(respo);
+    res.status(200).send({ message: "Followed" });
   } catch (error) {
     res.status(404).send(error.message);
   }

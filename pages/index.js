@@ -168,7 +168,6 @@ export default function Home() {
     } catch (error) {
       toast({
         title: `${error.message}`,
-
         status: "error",
         duration: 2000,
         isClosable: true,
@@ -181,9 +180,15 @@ export default function Home() {
         findId: id,
         follower: data._id,
       });
-      console.log(res);
+
+      toast({
+        title: `${res.data.message}`,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
     } catch (error) {
-      console.log(error);
+      console.log("error:", error);
     }
   };
   return (
