@@ -255,15 +255,16 @@ export default function Home() {
             direction={"column"}
             align={"flex-start"}
           >
-            {wholeData?.map((el) => {
-              return (
-                <Skeleton isLoaded={loading} w="100%" key={el._id}>
+            <Skeleton isLoaded={loading} w="100%">
+              {wholeData?.map((el) => {
+                return (
                   <Flex
                     boxShadow={"2xl"}
                     border={"2px"}
                     borderColor={"white"}
                     borderRadius={"2xl"}
                     w={"100%"}
+                    key={el._id}
                     bgColor={useColorModeValue("white", "black")}
                     color={useColorModeValue("black", "white")}
                     direction={"column"}
@@ -305,9 +306,9 @@ export default function Home() {
                       <Text fontWeight={"bold"}>{el.dislikes}</Text>
                     </Flex>
                   </Flex>
-                </Skeleton>
-              );
-            })}
+                );
+              })}
+            </Skeleton>
           </Flex>
         </Center>
       </Box>
