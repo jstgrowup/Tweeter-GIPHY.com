@@ -48,11 +48,12 @@ export default function Home() {
   const [bool, setbool] = useState(false);
   const [text, settext] = useState("");
   const [url, seturl] = useState("");
+  
   const handleChange = async (e) => {
     let huru = e.target.value;
     try {
       let res = await axios.get(
-        `https://api.giphy.com/v1/gifs/search?api_key=${NEXT_PUBLIC_KEY}&q=${huru}&limit=25&offset=0&rating=g&lang=en`
+        `https://api.giphy.com/v1/gifs/search?api_key=${process.env.NEXT_PUBLIC_KEY}&q=${huru}&limit=25&offset=0&rating=g&lang=en`
       );
       let {
         data: { data },
@@ -152,7 +153,7 @@ export default function Home() {
         id: id,
         type: type,
       });
-      setbool(!bool);
+  
     } catch (error) {
       toast({
         title: `${error.message}`,
