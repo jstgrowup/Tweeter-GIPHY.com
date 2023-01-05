@@ -15,12 +15,13 @@ import {
 import axios from "axios";
 
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useRouter } from "next/router";
 function Signup() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
   const [loading, setloading] = useState(false);
-
+  const router=useRouter()
   const [formData, setformData] = useState({
     username: "",
     email: "",
@@ -61,6 +62,7 @@ function Signup() {
         duration: 2000,
         isClosable: true,
       });
+      router.push("/signin")
       setloading(false);
     } catch (e) {
       setloading(true);
