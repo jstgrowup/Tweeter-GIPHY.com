@@ -165,7 +165,7 @@ export default function Home() {
       });
     }
   };
-  console.log(wholeData.length);
+
   return (
     <>
       <Box bg={useColorModeValue("#CCDEFF", "black")}>
