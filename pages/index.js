@@ -191,6 +191,17 @@ export default function Home() {
       console.log("error:", error);
     }
   };
+  const handleChat = (id) => {
+    toast({
+      title: "This feature is in development mode",
+
+      position: "top-left",
+      status: "info",
+      variant: "left-accent",
+      isClosable: true,
+      duration: 2000,
+    });
+  };
   return (
     <>
       <Box bg={useColorModeValue("#CCDEFF", "black")}>
@@ -327,13 +338,18 @@ export default function Home() {
                               color={"black"}
                               borderRadius={"md"}
                             >
-                              <HStack>
+                              <HStack gap={"0"}>
                                 {el.img ? (
-                                  <Image src={el.img} borderRadius={"md"} />
+                                  <Image
+                                    w={"30%"}
+                                    h={"100%"}
+                                    src={el.img}
+                                    borderRadius={"md"}
+                                  />
                                 ) : (
                                   <Image
                                     borderRadius={"full"}
-                                    w={"40%"}
+                                    w={"30%"}
                                     h={"100%"}
                                     src={
                                       "https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile-thumbnail.png"
@@ -342,22 +358,33 @@ export default function Home() {
                                 )}
                                 <Flex
                                   direction={"column"}
-                                  gap={"9"}
-                                  width={"100%"}
-                                  align={"center"}
+                                  h={"100%"}
+                                  gap={"4"}
+                                  width={"70%"}
                                 >
                                   <Text fontSize={"lg"} fontWeight={"semibold"}>
                                     {el.userName}
                                   </Text>
-                                  <Button
-                                    w={"100%"}
-                                    color={"white"}
-                                    onClick={() => handleFollow(el.userId)}
-                                    variant={"none"}
-                                    bg={"black"}
-                                  >
-                                    Follow
-                                  </Button>
+                                  <HStack>
+                                    <Button
+                                      w={"50%"}
+                                      color={"white"}
+                                      onClick={() => handleFollow(el.userId)}
+                                      variant={"none"}
+                                      bg={"black"}
+                                    >
+                                      Follow
+                                    </Button>
+                                    <Button
+                                      w={"50%"}
+                                      color={"white"}
+                                      onClick={() => handleChat(el.userId)}
+                                      variant={"none"}
+                                      bg={"black"}
+                                    >
+                                      Message
+                                    </Button>
+                                  </HStack>
                                 </Flex>
                               </HStack>
                             </PopoverContent>

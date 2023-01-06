@@ -5,7 +5,7 @@ const app = nc();
 Connectdatabse();
 app.get(async (req, res) => {
   try {
-    const repo = await PostModel.find();
+    const repo = await PostModel.find().sort({ createdAt: -1 });
     res.send(repo);
   } catch (error) {
     res.status(404).send(error.message);
