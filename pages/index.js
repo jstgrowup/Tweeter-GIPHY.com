@@ -36,6 +36,7 @@ import DeleteButton from "../Components/DeleteButton";
 import { getTheUser } from "../store/UserRedux/UserActions";
 import Link from "next/link";
 import { FaUserCircle } from "react-icons/fa";
+import Head from "next/head";
 
 const getData = async () => {
   try {
@@ -204,6 +205,9 @@ export default function Home() {
   };
   return (
     <>
+      <Head>
+        <title>Tweeter</title>
+      </Head>
       <Box bg={useColorModeValue("#CCDEFF", "black")}>
         <Center>
           <Box
