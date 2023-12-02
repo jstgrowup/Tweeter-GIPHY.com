@@ -42,7 +42,7 @@ function Navbar() {
   } = useSelector((store) => store.user);
   const handleLogout = () => {
     dispatch(logoutUser());
-    
+
     toast({
       title: "Logout successfull",
       status: "success",
@@ -51,7 +51,6 @@ function Navbar() {
     });
     router.push("/signin");
   };
- 
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
