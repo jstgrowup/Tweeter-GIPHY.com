@@ -6,8 +6,6 @@ import jwt from "jsonwebtoken";
 import userModel from "../../../Models/UserModel";
 app.post(async (req, res) => {
   const { token } = req.body;
-  
-
   try {
     jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY, (err, details) => {
       if (err) {

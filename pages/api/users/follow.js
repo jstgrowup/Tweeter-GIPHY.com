@@ -14,7 +14,6 @@ app.post(async (req, res) => {
         $set: { followers: data.followers + 1 },
       }
     );
-
     res.status(200).send({ message: "Followed" });
   } catch (error) {
     res.status(404).send(error.message);

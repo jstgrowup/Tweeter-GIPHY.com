@@ -15,9 +15,7 @@ const validate = (data) => {
 };
 app.patch(async (req, res) => {
   const { id } = req.query;
-
   const { username, password } = req.body;
-
   try {
     const { error } = validate(req.body);
 

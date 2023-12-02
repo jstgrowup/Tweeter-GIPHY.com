@@ -17,12 +17,10 @@ const validate = (data) => {
 app.post(async (req, res) => {
   try {
     const { error } = validate(req.body);
-
     if (error) {
       return res.status(401).send({ message: error.details[0].message });
     }
     const data = await userModel.findOne({ email: req.body.email });
-
     if (!data) {
       return res.status(401).send({ message: "No email exists" });
     }
@@ -31,7 +29,7 @@ app.post(async (req, res) => {
 
     await userModel.findByIdAndUpdate(
       { _id: data._id },
-      { $set: { password: hashPassword }}
+      { $set: { password: hashPassword } }
     );
     res.status(200).send({ message: "Password Updated successfully" });
   } catch (error) {

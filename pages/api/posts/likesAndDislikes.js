@@ -7,7 +7,6 @@ const app = nc();
 Connectdatabse();
 app.post(async (req, res) => {
   const { id, type } = req.body;
-
   const data = await PostModel.findById(id);
   try {
     if (type == "like") {

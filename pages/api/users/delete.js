@@ -9,13 +9,11 @@ Connectdatabse();
 
 app.post(async (req, res) => {
   const { id } = req.body;
- 
   try {
     await userModel.findByIdAndDelete({ _id: id });
-
     res.send("Deleted Successfully");
   } catch (error) {
     res.status(401).send(error.message);
   }
 });
-export default app
+export default app;

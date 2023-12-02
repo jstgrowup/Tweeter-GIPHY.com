@@ -8,11 +8,8 @@ Connectdatabse();
 app.post(async (req, res) => {
   try {
     const { token } = req.body;
-    
     const check = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_KEY);
-
     const respo = await PostModel.find({ userId: check._id });
-  
     res.send(respo);
   } catch (error) {
     res.status(404).send(error.message);
